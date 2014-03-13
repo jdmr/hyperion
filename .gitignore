@@ -13,3 +13,4 @@ hyperion-test.log**
 .sass-cache
 /src/main/resources/hyperion.properties
 Thumbs.db
+rebel.xml
