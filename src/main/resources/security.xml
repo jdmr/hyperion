@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <context:property-placeholder location="classpath*:hyperion.properties"/>
+    
+    <http pattern="/resources/**" security="none"/>
+    <http pattern="/404.html" security="none"/>
+    <http pattern="/405.html" security="none"/>
+    <http pattern="/500.html" security="none"/>
+    <http pattern="/crossdomain.xml" security="none"/>
+    <http pattern="/humans.txt" security="none"/>
+    <http pattern="/robots.txt" security="none"/>
+
+    <http auto-config="true" access-decision-manager-ref="webAccessDecisionManager" use-expressions="true">
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/event/create*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/event/update*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/event/delete*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/**" access="permitAll"/>
+        <form-login login-page="/login"
+                    login-processing-url="/authenticate"
+                    authentication-failure-url="/login?error=1"
+                    authentication-success-handler-ref="loginHandler"
+                    username-parameter="username"
+                    password-parameter="password"
+                />
+        <logout logout-url="/logout" logout-success-url="/" invalidate-session="true" />
+        <csrf/>
+    </http>
+
+    <beans:bean name="userDetailsService" class="org.davidmendoza.hyperion.service.impl.UserDetailsServiceImpl"/>
+
+    <beans:bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsService" >
+            <password-encoder ref="passwordEncoder" />
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <beans:property name="hierarchy">
+            <beans:value>
+                ROLE_ADMIN > ROLE_USER
+            </beans:value>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="roleHierarchyVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+        <beans:constructor-arg ref="roleHierarchy"/>
+    </beans:bean>
+
+    <!-- security:authorize tags using the url attribute will delegate to this accessDecisionManager -->
+    <beans:bean id="webAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.web.access.expression.WebExpressionVoter">
+                    <beans:property name="expressionHandler" ref="webSecurityExpressionHandler"/>
+                </beans:bean>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="webSecurityExpressionHandler"
+                class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+        <beans:property name="roleHierarchy" ref="roleHierarchy"/>
+    </beans:bean>
+
+    <beans:bean id="methodSecurityExpressionHandler"
+                class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+        <beans:property name="roleHierarchy" ref="roleHierarchy"/>
+    </beans:bean>
+
+</beans:beans>

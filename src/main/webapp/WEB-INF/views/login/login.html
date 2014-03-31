@@ -59,7 +59,7 @@ THE SOFTWARE.
                 <div class="col-sm-4">
                     <h2 th:text="#{login.title}">Login</h2>
 
-                    <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+                    <form action="#" th:action="@{/authenticate}" th:object="${user}" method="post">
                         <div class="alert alert-danger" th:if="${param.error != null}">
                             <h2 th:text='#{login.error.message}'>Error</h2>
                             <p th:text='#{login.invalid.message}'>Could not login.</p>

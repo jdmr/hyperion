@@ -23,6 +23,7 @@
  */
 package org.davidmendoza.hyperion.config;
 
+import java.util.HashSet;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,7 +46,10 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
 
 /**
  *
@@ -83,8 +87,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public SpringTemplateEngine templateEngine() {
+        Set<IDialect> dialects = new HashSet<>();
+        dialects.add(new SpringSecurityDialect());
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setTemplateResolver(templateResolver());
+        engine.setAdditionalDialects(dialects);
         return engine;
     }
 

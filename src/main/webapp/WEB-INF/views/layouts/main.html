@@ -31,16 +31,24 @@ THE SOFTWARE.
         <meta name="description" content=""/>
         <meta name="author" content="J. David Mendoza"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="shortcut icon" href="../../resources/img/favicon.ico" th:href="@{/resources/img/favicon.ico}" type="image/x-icon" />
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <meta name="apple-mobile-web-app-title" content="iRSVPed"/>
+        <link rel="shortcut icon" href="../../../resources/img/favicon.png" th:href="@{/resources/img/favicon.png}" />
         <!-- For third-generation iPad with high-resolution Retina display: -->
-        <link rel="apple-touch-icon" sizes="144x144" href="../../resources/img/apple-touch-icon-144x144.png" th:href="@{/resources/img/apple-touch-icon-144x144.png}" />
+        <link rel="apple-touch-icon" sizes="144x144" href="../../../resources/img/apple-touch-icon-144x144.png" th:href="@{/resources/img/apple-touch-icon-144x144.png}" />
         <!-- For iPhone with high-resolution Retina display: -->
-        <link rel="apple-touch-icon" sizes="114x114" href="../../resources/img/apple-touch-icon-114x114.png" th:href="@{/resources/img/apple-touch-icon-114x114.png}" />
+        <link rel="apple-touch-icon" sizes="114x114" href="../../../resources/img/apple-touch-icon-114x114.png" th:href="@{/resources/img/apple-touch-icon-114x114.png}" />
         <!-- For first- and second-generation iPad: -->
-        <link rel="apple-touch-icon" sizes="72x72" href="../../resources/img/apple-touch-icon-72x72.png" th:href="@{/resources/img/apple-touch-icon-72x72.png}" />
+        <link rel="apple-touch-icon" sizes="72x72" href="../../../resources/img/apple-touch-icon-72x72.png" th:href="@{/resources/img/apple-touch-icon-72x72.png}" />
         <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-        <link rel="apple-touch-icon" href="../../resources/img/apple-touch-icon.png" th:href="@{/resources/img/apple-touch-icon.png}" />
+        <link rel="apple-touch-icon" href="../../../resources/img/apple-touch-icon.png" th:href="@{/resources/img/apple-touch-icon.png}" />
 
+        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
@@ -61,7 +69,7 @@ THE SOFTWARE.
                 <nav class="collapse navbar-collapse" role="navigation">
                     <ul class="nav navbar-nav">
                         <li th:class="${activeMenu} == 'home' ? 'active'"><a href="#" th:href="@{/}" th:text="#{home.label}">Home</a></li>
-                        <li><a href="#" th:href="@{/logout}" th:text="#{logout.label}">Logout</a></li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/logout}" th:text="#{logout.label}">Logout</a></li>
                     </ul>
                 </nav>
             </div>
@@ -80,15 +88,16 @@ THE SOFTWARE.
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 text-right">
-                        <p><a href="http://www.swau.edu" target='_blank'><img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="J. David Mendoza" /></a></p>
+                        <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2014</span> David Mendoza</p>
                     </div>
                 </div>
             </div>
         </footer>
 
         <div th:fragment="scripts" th:remove="tag">
-            <script src="../../../resources/js/jquery-2.1.0.min.js" th:src="@{/resources/js/jquery-2.1.0.min.js}"></script>
-            <script src="../../../resources/js/jquery-ui.min.js" th:src="@{/resources/js/jquery-ui.min.js}"></script>
+            <script src="../../../resources/js/jquery-1.11.0.min.js" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
+            <script src="../../../resources/js/jquery-migrate-1.2.1.min.js" th:src="@{/resources/js/jquery-migrate-1.2.1.min.js}"></script>
+            <script src="../../../resources/js/jquery-ui-1.10.4.custom.min.js" th:src="@{/resources/js/jquery-ui-1.10.4.custom.min.js}"></script>
             <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
             <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
         </div>

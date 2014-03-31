@@ -63,7 +63,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         }
 
         log.info("Validating Users");
-        User admin = userDao.get("admin@swau.edu");
+        User admin = userDao.get("admin@irsvped.com");
         if (admin == null) {
             admin = new User("admin@irsvped.com", "admin", "Admin", "User");
             admin.addRole(adminRole);
