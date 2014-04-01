@@ -136,6 +136,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/ckeditor/**").addResourceLocations("/ckeditor/");
         registry.addResourceHandler("/crossdomain.xml").addResourceLocations("/crossdomain.xml");
         registry.addResourceHandler("/robots.txt").addResourceLocations("/robots.txt");
         registry.addResourceHandler("/humans.txt").addResourceLocations("/humans.txt");

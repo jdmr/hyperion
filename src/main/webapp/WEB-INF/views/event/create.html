@@ -1,0 +1,214 @@
+<!--
+The MIT License
+
+Copyright 2014 J. David Mendoza.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="/layouts/main :: head('Create Event')">
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>EVENT</title>
+        <meta name="description" content=""/>
+        <meta name="author" content="J. David Mendoza"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon"                    href="../../../resources/img/favicon.ico" th:href="@{/resources/img/favicon.ico}" type="image/x-icon" />
+        <link rel="apple-touch-icon" sizes="144x144" href="../../../resources/img/apple-touch-icon-144x144.png" th:href="@{/resources/img/apple-touch-icon-144x144.png}" />
+        <link rel="apple-touch-icon" sizes="114x114" href="../../../resources/img/apple-touch-icon-114x114.png" th:href="@{/resources/img/apple-touch-icon-114x114.png}" />
+        <link rel="apple-touch-icon" sizes="72x72"   href="../../../resources/img/apple-touch-icon-72x72.png" th:href="@{/resources/img/apple-touch-icon-72x72.png}" />
+        <link rel="apple-touch-icon"                 href="../../../resources/img/apple-touch-icon.png" th:href="@{/resources/img/apple-touch-icon.png}" />
+
+        <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css" th:href="@{/resources/css/font-awesome.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+            <div class="container" style="padding: 0;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" style="height:45px;"/></a>
+                </div>
+                <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
+                    <nav class="collapse navbar-collapse" role="navigation">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
+                            <li class="disabled"><a href="#" th:href="@{/event/create}" th:text="#{event.label}">Event</a></li>
+                            <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
+                            <li><a href="#" th:text="${#authentication.name}">TEST</a></li>
+                            <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
+                        </ul>
+                    </nav>
+                </form>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="row content">
+                <div class="col-sm-12">
+                    <form action="#" th:action="@{/event/create}" th:object="${event}" method="post" id="eventForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                                    <h4 th:text="#{error.event.not.created}">Error</h4>
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Incorrect input</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('name')}?'has-error'">
+                                    <label class="control-label" for="name" th:text="#{event.name}">Name</label>
+                                    <input type="text" th:field="*{name}" id="name" class="form-control" autofocus="autofocus"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('seats')}?'has-error'">
+                                    <label class="control-label" for="seats" th:text="#{event.seats}">Seats</label>
+                                    <input type="number" th:field="*{seats}" id="seats" class="form-control" min="0" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('description')}?'has-error'">
+                                    <label class="control-label" for="description" th:text="#{event.description}">Description</label>
+                                    <textarea th:field="*{description}" id="description" class="form-control" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('date')}?'has-error'">
+                                    <label class="control-label" for="date" th:text="#{event.date}">Date</label>
+                                    <input type="text" th:field="*{date}" id="date" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('time')}?'has-error'">
+                                    <label class="control-label" for="time" th:text="#{event.time}">Time</label>
+                                    <input type="text" th:field="*{time}" id="time" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hostName')}?'has-error'">
+                                    <label class="control-label" for="hostName" th:text="#{event.hostName}">Host Name</label>
+                                    <input type="text" th:field="*{hostName}" id="hostName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hostPhone')}?'has-error'">
+                                    <label class="control-label" for="hostPhone" th:text="#{event.hostPhone}">Host Phone</label>
+                                    <input type="text" th:field="*{hostPhone}" id="hostPhone" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hostEmail')}?'has-error'">
+                                    <label class="control-label" for="hostEmail" th:text="#{event.hostEmail}">Host Email</label>
+                                    <input type="text" th:field="*{hostEmail}" id="hostEmail" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('street')}?'has-error'">
+                                    <label class="control-label" for="street" th:text="#{event.street}">Street</label>
+                                    <input type="text" th:field="*{street}" id="street" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('city')}?'has-error'">
+                                    <label class="control-label" for="city" th:text="#{event.city}">City</label>
+                                    <input type="text" th:field="*{city}" id="city" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('state')}?'has-error'">
+                                    <label class="control-label" for="state" th:text="#{event.state}">State</label>
+                                    <input type="text" th:field="*{state}" id="state" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('zip')}?'has-error'">
+                                    <label class="control-label" for="zip" th:text="#{event.zip}">ZIP Code</label>
+                                    <input type="text" th:field="*{zip}" id="zip" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Create</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="padding-top:20px;">
+                                <span class="required">*</span> Required
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer role="contentinfo" th:replace="/layouts/main :: footer">
+        </footer>
+
+        <div th:replace="/layouts/main :: scripts" th:remove="tag">
+            <script src="../../../resources/js/jquery-1.10.2.min.js" th:src="@{/resources/js/jquery-1.10.2.min.js}"></script>
+            <script src="../../../resources/js/jquery-migrate-1.2.1.min.js" th:src="@{/resources/js/jquery-migrate-1.2.1.min.js}"></script>
+            <script src="../../../resources/js/jquery-ui.min.js" th:src="@{/resources/js/jquery-ui.min.js}"></script>
+            <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+            <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
+        </div>
+        <script src="../../../ckeditor/ckeditor.js" th:src="@{/ckeditor/ckeditor.js}"></script>
+        <script>
+            $(function() {
+                CKEDITOR.replace('description');
+                
+                $('a#logoutLink').click(function(e) {
+                    e.preventDefault();
+                    $('#logoutForm').submit();
+                })
+            });
+        </script>
+
+    </body>
+</html>
