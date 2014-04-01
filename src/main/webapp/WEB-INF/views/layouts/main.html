@@ -48,7 +48,7 @@ THE SOFTWARE.
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        
+
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
@@ -62,9 +62,11 @@ THE SOFTWARE.
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span style="color: #fff;">Menu</span>
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}" th:text='#{project.name}'>Matthew</a>
                 </div>
                 <nav class="collapse navbar-collapse" role="navigation">
                     <ul class="nav navbar-nav">

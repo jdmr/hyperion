@@ -50,10 +50,17 @@ THE SOFTWARE.
         </header>
 
         <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h2 th:text="#{home.title}">Home</h2>
-
+            <div class="row content">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <form action="#" th:action="@{/code}" method="post" autocomplete="off" name="codeForm">
+                        <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" />
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="code" id="code" placeholder="Type your iRSVPed Code" style="text-align: center;" autofocus="autofocus" value=""/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">RSVP</button>
+                            </span>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
