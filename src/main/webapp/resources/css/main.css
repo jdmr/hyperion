@@ -32,7 +32,12 @@ body {
   -o-background-size: cover;
   background-size: cover;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale')"; }
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale')";
+  -webkit-transition: background .6s ease;
+  -moz-transition: background .6s ease;
+  -ms-transition: background .6s ease;
+  -o-transition: background .6s ease;
+  transition: background .6s ease; }
   body a {
     color: #92bce0; }
     body a:hover, body a:focus {
