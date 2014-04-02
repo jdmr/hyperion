@@ -43,8 +43,37 @@
         <authentication-provider user-service-ref="userDetailsService" >
             <password-encoder ref="passwordEncoder" />
         </authentication-provider>
+        
+        <authentication-provider ref="socialAuthenticationProvider"/>
     </authentication-manager>
+    
+    <!--
+        Configures the social authentication filter which integrates Spring Social
+        with Spring Security.
+    -->
+    <beans:bean id="socialAuthenticationFilter" class="org.springframework.social.security.SocialAuthenticationFilter">
+        <beans:constructor-arg index="0" ref="authenticationManager"/>
+        <beans:constructor-arg index="1" ref="userIdSource"/>
+        <beans:constructor-arg index="2" ref="usersConnectionRepository"/>
+        <beans:constructor-arg index="3" ref="connectionFactoryLocator"/>
 
+        <!-- Sets the url of the registration form. -->
+        <beans:property name="signupUrl" value="/user/register"/>
+    </beans:bean>
+
+    <!--
+        Configures the social authentication provider which processes authentication requests
+        made by using supported social authentication services (FB, Twitter and so on).
+    -->
+    <beans:bean id="socialAuthenticationProvider" class="org.springframework.social.security.SocialAuthenticationProvider">
+        <beans:constructor-arg index="0" ref="usersConnectionRepository"/>
+        <beans:constructor-arg index="1" ref="socialUserDetailsService"/>
+    </beans:bean>
+    
+    <beans:bean id="socialUserDetailsService" class="org.davidmendoza.hyperion.service.impl.SocialUserDetailsServiceImpl" >
+        <beans:constructor-arg ref="userDetailsService" />
+    </beans:bean>
+    
     <beans:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
         <beans:property name="hierarchy">
             <beans:value>

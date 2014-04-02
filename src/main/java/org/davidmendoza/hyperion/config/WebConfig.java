@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
 
@@ -159,6 +160,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         messageSource.setCacheSeconds(0);
         factory.setValidationMessageSource(messageSource);
         return factory;
+    }
+
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
     }
 
 }
