@@ -24,109 +24,145 @@ THE SOFTWARE.
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
 body {
-  padding-top: 60px;
-  color: white;
-  font: 16px/1.5em Ubuntu, sans-serif;
-  background: url('../img/bg.jpg') #333 no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale')";
-  -webkit-transition: background .6s ease;
-  -moz-transition: background .6s ease;
-  -ms-transition: background .6s ease;
-  -o-transition: background .6s ease;
-  transition: background .6s ease;
-  
-  a {
-    color: lighten(#428bca, 20%);
-    &:hover, &:focus {
-      color: lighten(#428bca, 30%);
-    }
-  }
+    padding-top: 60px;
+    color: white;
+    font: 16px/1.5em Ubuntu, sans-serif;
+    background: url('../img/bg.jpg') #333 no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg.jpg', sizingMethod='scale')";
+    -webkit-transition: background .6s ease;
+    -moz-transition: background .6s ease;
+    -ms-transition: background .6s ease;
+    -o-transition: background .6s ease;
+    transition: background .6s ease;
 
-  #login-popup {
-    position: relative;
-    background-color:rgba(255,255,255,0.8);
-    padding: 20px;
-    width: auto;
-    max-width: 500px;
-    margin: 20px auto;
-    color: #333;
-  }
-
-  .content {
-    background-color:rgba(0,0,0,0.3);
-    padding-bottom: 20px;
-
-    .app-sidenav {
-      margin: 20px 0;
-      padding: 10px 0;
-      text-shadow: 0 1px 0 #333;
-      background-color: rgba(200,200,200,0.5);
-      border-radius: 5px;
-
-      li.active {
-        a {
-          font-weight: bold;
-          color: #FAFAFA;
-          background-color: rgba(100,100,100,0.8);
-        }
-      }
-
-      li {
-        a {
-          color: #fff;
-
-          &:hover {
-            color: #FAFAFA;
-            background-color: rgba(200,200,200,0.8);
-          }
-        }
-      }
-    }
-
-    .table {
-      background-color: rgba(50, 50, 50, 0.8);
-    }
-
-    .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
-      background-color: rgba(100,100,100, 0.5);
-    }
-
-    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-      border-top: 1px solid rgba(200,200,200, 0.5);
-    }
-
-    .table > thead > tr > th {
-      border-bottom: 2px solid rgba(254,254,254, 0.5);;
-    }
-  }
-
-  .castor-nav {
-    @media(min-width: 768px) and (max-width: 991px) {
-      font-size: 0.75em;
-    }
-  }
-
-  #signup-li {
     a {
-      background-color: darken(#428bca, 10%);
-      color: darken(#fff, 10%);
-      &:hover, &:focus {
-        background-color: #428bca;
-        color: #fff;
-      }
+        color: lighten(#428bca, 20%);
+        &:hover, &:focus {
+            color: lighten(#428bca, 30%);
+        }
     }
-  }
 
-  legend {
-    color: #fff;
-  }
+    #login-popup {
+        position: relative;
+        background-color:rgba(255,255,255,0.8);
+        padding: 20px;
+        width: auto;
+        max-width: 500px;
+        margin: 20px auto;
+        color: #333;
+    }
 
-  .help-block {
-    color: #fff;
-  }
+    .content {
+        background-color:rgba(0,0,0,0.3);
+        padding-bottom: 20px;
+
+        .app-sidenav {
+            margin: 20px 0;
+            padding: 10px 0;
+            text-shadow: 0 1px 0 #333;
+            background-color: rgba(200,200,200,0.5);
+            border-radius: 5px;
+
+            li.active {
+                a {
+                    font-weight: bold;
+                    color: #FAFAFA;
+                    background-color: rgba(100,100,100,0.8);
+                }
+            }
+
+            li {
+                a {
+                    color: #fff;
+
+                    &:hover {
+                        color: #FAFAFA;
+                        background-color: rgba(200,200,200,0.8);
+                    }
+                }
+            }
+        }
+
+        .table {
+            background-color: rgba(50, 50, 50, 0.8);
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: rgba(100,100,100, 0.5);
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            border-top: 1px solid rgba(200,200,200, 0.5);
+        }
+
+        .table > thead > tr > th {
+            border-bottom: 2px solid rgba(254,254,254, 0.5);;
+        }
+    }
+
+    .castor-nav {
+        @media(min-width: 768px) and (max-width: 991px) {
+            font-size: 0.75em;
+        }
+    }
+
+    #signup-li {
+        a {
+            background-color: darken(#428bca, 10%);
+            color: darken(#fff, 10%);
+            &:hover, &:focus {
+                background-color: #428bca;
+                color: #fff;
+            }
+        }
+    }
+
+    legend {
+        color: #fff;
+    }
+
+    .help-block {
+        color: #fff;
+    }
+
+    $fb-blue: #0e285f;
+
+    .btn-facebook {
+        background-image: none;
+        background-color: $fb-blue;
+        border-color: $fb-blue;
+        color: lighten($fb-blue, 50%);
+        filter: none;
+    }
+
+    .btn-facebook:hover, .btn-facebook:focus {
+        background-image: none;
+        background-color: lighten($fb-blue, 10%);
+        border-color: $fb-blue;
+        color: lighten($fb-blue, 60%);
+        filter: none;
+    }
+
+    $tw-blue: #2095c0;
+
+    .btn-twitter {
+        background-image: none;
+        background-color: $tw-blue;
+        border-color: $tw-blue;
+        color: lighten($tw-blue, 50%);
+        filter: none;
+    }
+
+    .btn-twitter:hover, .btn-twitter:focus {
+        background-image: none;
+        background-color: lighten($tw-blue, 10%);
+        border-color: $tw-blue;
+        color: lighten($tw-blue, 60%);
+        filter: none;
+    }
 }
