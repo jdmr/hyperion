@@ -23,8 +23,10 @@
  */
 package org.davidmendoza.hyperion.dao.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.dao.BaseDao;
 import org.davidmendoza.hyperion.dao.UserDao;
+import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Role;
 import org.davidmendoza.hyperion.model.User;
 import org.hibernate.Query;
@@ -39,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class UserDaoHibernate extends BaseDao implements UserDao {
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -67,12 +69,14 @@ public class UserDaoHibernate extends BaseDao implements UserDao {
 
     @Override
     public User create(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPasswordVerification(user.getPassword());
+        if (StringUtils.isNotBlank(user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPasswordVerification(user.getPassword());
+        }
         currentSession().save(user);
         return user;
     }
-    
+
     @Override
     public Role getRole(String authority) {
         return (Role) currentSession().get(Role.class, authority);
@@ -82,6 +86,13 @@ public class UserDaoHibernate extends BaseDao implements UserDao {
     public Role createRole(Role role) {
         currentSession().save(role);
         return role;
+    }
+
+    @Override
+    public Connection getConnection(String username) {
+        Query query = currentSession().createQuery("select c from Connection c where c.id.userid = :username");
+        query.setString("username", username);
+        return (Connection) query.uniqueResult();
     }
 
 }

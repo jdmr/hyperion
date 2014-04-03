@@ -23,6 +23,12 @@
  */
 package org.davidmendoza.hyperion.web;
 
+import javax.servlet.http.HttpSession;
+import org.davidmendoza.hyperion.model.Connection;
+import org.davidmendoza.hyperion.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,10 +38,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author J. David Mendoza <jdmendozar@gmail.com>
  */
 @Controller
-public class HomeController {
+public class HomeController extends BaseController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String home() {
+    public String home(HttpSession session) {
+        log.debug("Showing home page");
+        if (session.getAttribute("imageUrl") == null && session.getAttribute("noImageUrl") == null) {
+            log.debug("Looking for authenticated user");
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && !auth.getName().equals("anonymousUser")) {
+                log.debug("Looking for social connection for {}", auth.getName());
+                Connection connection = userService.getConnection(auth.getName());
+                if (connection != null) {
+                    session.setAttribute("imageUrl", connection.getImageUrl());
+                } else {
+                    session.setAttribute("noImageUrl", Boolean.TRUE);
+                }
+            }
+        }
         return "home/home";
     }
 

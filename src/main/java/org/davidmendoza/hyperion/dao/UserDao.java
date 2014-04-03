@@ -24,8 +24,10 @@
 
 package org.davidmendoza.hyperion.dao;
 
+import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Role;
 import org.davidmendoza.hyperion.model.User;
+
 
 /**
  *
@@ -44,5 +46,7 @@ public interface UserDao {
     public Role createRole(Role role);
 
     public User create(User user);
+
+    public Connection getConnection(String username);
     
 }

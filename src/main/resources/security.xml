@@ -33,6 +33,9 @@
                 />
         <logout logout-url="/logout" logout-success-url="/" invalidate-session="true" />
         <csrf/>
+        
+        <!-- Adds social authentication filter to the Spring Security filter chain. -->
+        <custom-filter ref="socialAuthenticationFilter" before="PRE_AUTH_FILTER" />
     </http>
 
     <beans:bean name="userDetailsService" class="org.davidmendoza.hyperion.service.impl.UserDetailsServiceImpl"/>

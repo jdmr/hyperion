@@ -24,6 +24,7 @@
 package org.davidmendoza.hyperion.service.impl;
 
 import org.davidmendoza.hyperion.dao.UserDao;
+import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Role;
 import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.service.BaseService;
@@ -68,6 +69,11 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public Role getRole(String authority) {
         return userDao.getRole(authority);
+    }
+
+    @Override
+    public Connection getConnection(String username) {
+        return userDao.getConnection(username);
     }
 
 }

@@ -25,17 +25,7 @@ THE SOFTWARE.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head th:include="/layouts/main :: head('Create Event')">
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>EVENT</title>
-        <meta name="description" content=""/>
-        <meta name="author" content="J. David Mendoza"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="shortcut icon"                    href="../../../resources/img/favicon.ico" th:href="@{/resources/img/favicon.ico}" type="image/x-icon" />
-        <link rel="apple-touch-icon" sizes="144x144" href="../../../resources/img/apple-touch-icon-144x144.png" th:href="@{/resources/img/apple-touch-icon-144x144.png}" />
-        <link rel="apple-touch-icon" sizes="114x114" href="../../../resources/img/apple-touch-icon-114x114.png" th:href="@{/resources/img/apple-touch-icon-114x114.png}" />
-        <link rel="apple-touch-icon" sizes="72x72"   href="../../../resources/img/apple-touch-icon-72x72.png" th:href="@{/resources/img/apple-touch-icon-72x72.png}" />
-        <link rel="apple-touch-icon"                 href="../../../resources/img/apple-touch-icon.png" th:href="@{/resources/img/apple-touch-icon.png}" />
 
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
@@ -60,10 +50,13 @@ THE SOFTWARE.
                 <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
                     <nav class="collapse navbar-collapse" role="navigation">
                         <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
+                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
+                            </li>
                             <li class="active"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
                             <li class="disabled"><a href="#" th:href="@{/event/create}" th:text="#{event.label}">Event</a></li>
                             <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
-                            <li><a href="#" th:text="${#authentication.name}">TEST</a></li>
                             <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
                         </ul>
                     </nav>

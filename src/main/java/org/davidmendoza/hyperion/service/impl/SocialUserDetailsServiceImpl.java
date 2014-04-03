@@ -24,9 +24,11 @@
 
 package org.davidmendoza.hyperion.service.impl;
 
+import org.davidmendoza.hyperion.dao.UserDao;
+import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUserDetails;
@@ -39,6 +41,8 @@ import org.springframework.social.security.SocialUserDetailsService;
 public class SocialUserDetailsServiceImpl extends BaseService implements SocialUserDetailsService {
     
     private final UserDetailsService userDetailsService;
+    @Autowired
+    private UserDao userDao;
 
     public SocialUserDetailsServiceImpl(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -48,7 +52,8 @@ public class SocialUserDetailsServiceImpl extends BaseService implements SocialU
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
         log.debug("Loading user by user id : {}", userId);
         
-        UserDetails user = userDetailsService.loadUserByUsername(userId);
+//        UserDetails user = userDetailsService.loadUserByUsername(userId);
+        User user = userDao.get(userId);
         log.debug("Found user details: {}", user);
         
         return (SocialUserDetails) user;

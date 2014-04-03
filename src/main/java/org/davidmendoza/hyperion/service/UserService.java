@@ -23,6 +23,7 @@
  */
 package org.davidmendoza.hyperion.service;
 
+import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Role;
 import org.davidmendoza.hyperion.model.User;
 
@@ -41,5 +42,7 @@ public interface UserService {
     public User create(User user);
     
     public Role getRole(String authority);
+
+    public Connection getConnection(String username);
     
 }
