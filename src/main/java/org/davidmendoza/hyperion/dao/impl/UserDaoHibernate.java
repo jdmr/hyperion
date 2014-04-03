@@ -68,6 +68,7 @@ public class UserDaoHibernate extends BaseDao implements UserDao {
     @Override
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPasswordVerification(user.getPassword());
         currentSession().save(user);
         return user;
     }

@@ -24,7 +24,6 @@
 
 package org.davidmendoza.hyperion.service.impl;
 
-import static java.lang.StrictMath.log;
 import java.util.List;
 import org.davidmendoza.hyperion.dao.UserDao;
 import org.davidmendoza.hyperion.model.User;

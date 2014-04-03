@@ -31,6 +31,8 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,11 +40,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
+import org.davidmendoza.hyperion.validation.PasswordsNotEmpty;
+import org.davidmendoza.hyperion.validation.PasswordsNotEqual;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,6 +62,15 @@ import org.springframework.security.core.userdetails.UserDetails;
     @NamedQuery(name = "findUserByUsername", query = "select u from User u where u.username = :username"),
     @NamedQuery(name = "findUserByOpenId", query = "select u from User u where u.openId = :openId")
 })
+@PasswordsNotEmpty(
+        triggerFieldName = "signInProvider",
+        passwordFieldName = "password",
+        passwordVerificationFieldName = "passwordVerification"
+)
+@PasswordsNotEqual(
+        passwordFieldName = "password",
+        passwordVerificationFieldName = "passwordVerification"
+)
 public class User implements Serializable, UserDetails {
 
     @Id
@@ -72,6 +85,8 @@ public class User implements Serializable, UserDetails {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
+    @Transient
+    private String passwordVerification;
     private Boolean enabled = true;
     private Boolean accountExpired = false;
     private Boolean accountLocked = false;
@@ -83,6 +98,9 @@ public class User implements Serializable, UserDetails {
         @JoinColumn(name = "user_id")}, inverseJoinColumns
             = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private SocialMediaService signInProvider;
 
     public User() {
     }
@@ -164,6 +182,20 @@ public class User implements Serializable, UserDetails {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the passwordVerification
+     */
+    public String getPasswordVerification() {
+        return passwordVerification;
+    }
+
+    /**
+     * @param passwordVerification the passwordVerification to set
+     */
+    public void setPasswordVerification(String passwordVerification) {
+        this.passwordVerification = passwordVerification;
     }
 
     /**
@@ -301,6 +333,28 @@ public class User implements Serializable, UserDetails {
         sb.append(" ");
         sb.append(lastName);
         return sb.toString();
+    }
+
+    /**
+     * @return the signInProvider
+     */
+    public SocialMediaService getSignInProvider() {
+        return signInProvider;
+    }
+
+    /**
+     * @param signInProvider the signInProvider to set
+     */
+    public void setSignInProvider(SocialMediaService signInProvider) {
+        this.signInProvider = signInProvider;
+    }
+
+    public boolean isNormalRegistration() {
+        return signInProvider == null;
+    }
+
+    public boolean isSocialSignIn() {
+        return signInProvider != null;
     }
 
     @Override

@@ -21,25 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.hyperion.service;
 
-import org.davidmendoza.hyperion.model.Role;
-import org.davidmendoza.hyperion.model.User;
+package org.davidmendoza.hyperion.model;
 
 /**
  *
  * @author J. David Mendoza <jdmendozar@gmail.com>
  */
-public interface UserService {
-
-    public User get(String username);
-
-    public User getByOpenId(String openId);
-
-    public User update(User user);
-
-    public User create(User user);
-    
-    public Role getRole(String authority);
-    
+public enum SocialMediaService {
+    FACEBOOK,
+    TWITTER
 }
