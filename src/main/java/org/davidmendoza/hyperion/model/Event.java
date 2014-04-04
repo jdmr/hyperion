@@ -35,6 +35,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -54,9 +55,15 @@ public class Event implements Serializable {
     private String description;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "date_", nullable = false)
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
     private Date date = new Date();
     @Transient
-    private Date time = new Date();
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date startDate = new Date();
+    @Transient
+    private String time;
+    @Transient
+    private String timeZone;
     private String street;
     private String city;
     @Column(name = "state_")
@@ -155,17 +162,45 @@ public class Event implements Serializable {
     }
 
     /**
+     * @return the startDate
+     */
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * @param startDate the startDate to set
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
      * @return the time
      */
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
+    }
+
+    /**
+     * @return the timeZone
+     */
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    /**
+     * @param timeZone the timeZone to set
+     */
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 
     /**

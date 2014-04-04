@@ -44,6 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EventDaoImpl extends BaseDao implements EventDao {
 
+    @Transactional(readOnly = true)
     @Override
     public Map<String, Object> list(Map<String, Object> params) {
         log.debug("Event list");
@@ -89,6 +90,18 @@ public class EventDaoImpl extends BaseDao implements EventDao {
         params.put("totalItems", countCriteria.list().get(0));
         return params;
 
+    }
+
+    @Override
+    public Event create(Event event) {
+        currentSession().save(event);
+        return event;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Event get(String eventId) {
+        return (Event) currentSession().get(Event.class, eventId);
     }
 
 }

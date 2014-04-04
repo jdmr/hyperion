@@ -24,8 +24,11 @@
 
 package org.davidmendoza.hyperion.service.impl;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 import org.davidmendoza.hyperion.dao.EventDao;
+import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.service.BaseService;
 import org.davidmendoza.hyperion.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,21 @@ public class EventServiceImpl extends BaseService implements EventService {
     @Override
     public Map<String, Object> list(Map<String, Object> params) {
         return eventDao.list(params);
+    }
+
+    @Override
+    public Event create(Event event) {
+        Date date = new Date();
+        event.setDateCreated(date);
+        event.setLastUpdated(date);
+        event.setId(UUID.randomUUID().toString());
+        return eventDao.create(event);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Event get(String eventId) {
+        return eventDao.get(eventId);
     }
     
 }

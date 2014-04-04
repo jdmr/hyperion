@@ -25,6 +25,7 @@
 package org.davidmendoza.hyperion.dao;
 
 import java.util.Map;
+import org.davidmendoza.hyperion.model.Event;
 
 /**
  *
@@ -33,5 +34,9 @@ import java.util.Map;
 public interface EventDao {
 
     public Map<String, Object> list(Map<String, Object> params);
+
+    public Event create(Event event);
+
+    public Event get(String eventId);
     
 }

@@ -55,7 +55,6 @@ THE SOFTWARE.
                                 <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
                             </li>
                             <li class="active"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/create}" th:text="#{event.label}">Event</a></li>
                             <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
                             <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
                         </ul>
@@ -67,7 +66,7 @@ THE SOFTWARE.
         <div class="container">
             <div class="row content">
                 <div class="col-sm-12">
-                    <form action="#" th:action="@{/event/create}" th:object="${event}" method="post" id="eventForm">
+                    <form action="#" th:action="@{/event/confirm}" th:object="${event}" method="post" id="eventForm">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
@@ -93,7 +92,7 @@ THE SOFTWARE.
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}?'has-error'">
@@ -106,18 +105,67 @@ THE SOFTWARE.
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('date')}?'has-error'">
-                                    <label class="control-label" for="date" th:text="#{event.date}">Date</label>
-                                    <input type="text" th:field="*{date}" id="date" class="form-control" />
+                                    <label class="control-label" for="startDate" th:text="#{event.date}">Date</label>
+                                    <input type="text" th:field="*{startDate}" id="startDate" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('time')}?'has-error'">
                                     <label class="control-label" for="time" th:text="#{event.time}">Time</label>
-                                    <input type="text" th:field="*{time}" id="time" class="form-control" />
+                                    <select name="time" id="time" class="form-control" th:field="*{time}">
+                                        <option value="18:00">06:00 pm</option>
+                                        <option value="18:30">06:30 pm</option>
+                                        <option value="19:00">07:00 pm</option>
+                                        <option value="19:30">07:30 pm</option>
+                                        <option value="20:00">08:00 pm</option>
+                                        <option value="20:30">08:30 pm</option>
+                                        <option value="21:00">09:00 pm</option>
+                                        <option value="21:30">09:30 pm</option>
+                                        <option value="22:00">10:00 pm</option>
+                                        <option value="22:30">10:30 pm</option>
+                                        <option value="23:00">11:00 pm</option>
+                                        <option value="23:30">11:30 pm</option>
+                                        <option value="00:00">00:00 am</option>
+                                        <option value="00:30">00:30 am</option>
+                                        <option value="01:00">01:00 am</option>
+                                        <option value="01:30">01:30 am</option>
+                                        <option value="02:00">02:00 am</option>
+                                        <option value="02:30">02:30 am</option>
+                                        <option value="03:00">03:00 am</option>
+                                        <option value="03:30">03:30 am</option>
+                                        <option value="04:00">04:00 am</option>
+                                        <option value="04:30">04:30 am</option>
+                                        <option value="05:00">05:00 am</option>
+                                        <option value="05:30">05:30 am</option>
+                                        <option value="06:00">06:00 am</option>
+                                        <option value="06:30">06:30 am</option>
+                                        <option value="07:00">07:00 am</option>
+                                        <option value="07:30">07:30 am</option>
+                                        <option value="08:00">08:00 am</option>
+                                        <option value="08:30">08:30 am</option>
+                                        <option value="09:00">09:00 am</option>
+                                        <option value="09:30">09:30 am</option>
+                                        <option value="10:00">10:00 am</option>
+                                        <option value="10:30">10:30 am</option>
+                                        <option value="11:00">11:00 am</option>
+                                        <option value="11:30">11:30 am</option>
+                                        <option value="12:00">12:00 pm</option>
+                                        <option value="12:30">12:30 pm</option>
+                                        <option value="13:00">01:00 pm</option>
+                                        <option value="13:30">01:30 pm</option>
+                                        <option value="14:00">02:00 pm</option>
+                                        <option value="14:30">02:30 pm</option>
+                                        <option value="15:00">03:00 pm</option>
+                                        <option value="15:30">03:30 pm</option>
+                                        <option value="16:00">04:00 pm</option>
+                                        <option value="16:30">04:30 pm</option>
+                                        <option value="17:00">05:00 pm</option>
+                                        <option value="17:30">05:30 pm</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('hostName')}?'has-error'">
@@ -138,7 +186,7 @@ THE SOFTWARE.
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('street')}?'has-error'">
@@ -165,15 +213,10 @@ THE SOFTWARE.
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Create</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6" style="padding-top:20px;">
-                                <span class="required">*</span> Required
                             </div>
                         </div>
                     </form>
@@ -199,7 +242,12 @@ THE SOFTWARE.
                 $('a#logoutLink').click(function(e) {
                     e.preventDefault();
                     $('#logoutForm').submit();
-                })
+                });
+                
+                $('#startDate').datepicker({
+                    minDate: '+0d',
+                    maxDate: '+18m'
+                });
             });
         </script>
 
