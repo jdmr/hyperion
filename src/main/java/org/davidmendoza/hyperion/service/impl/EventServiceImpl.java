@@ -24,39 +24,29 @@
 
 package org.davidmendoza.hyperion.service.impl;
 
-import org.davidmendoza.hyperion.dao.UserDao;
-import org.davidmendoza.hyperion.model.User;
+import java.util.Map;
+import org.davidmendoza.hyperion.dao.EventDao;
 import org.davidmendoza.hyperion.service.BaseService;
+import org.davidmendoza.hyperion.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.security.SocialUserDetails;
-import org.springframework.social.security.SocialUserDetailsService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author J. David Mendoza <jdmendozar@gmail.com>
  */
-public class SocialUserDetailsServiceImpl extends BaseService implements SocialUserDetailsService {
-    
-    private final UserDetailsService userDetailsService;
-    @Autowired
-    private UserDao userDao;
+@Service
+@Transactional
+public class EventServiceImpl extends BaseService implements EventService {
 
-    public SocialUserDetailsServiceImpl(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    @Autowired
+    private EventDao eventDao;
     
+    @Transactional(readOnly = true)
     @Override
-    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
-        log.debug("Loading user by user id : {}", userId);
-        
-//        UserDetails user = userDetailsService.loadUserByUsername(userId);
-        User user = userDao.get(userId);
-        log.debug("Found user details: {}", user);
-        
-        return (SocialUserDetails) user;
+    public Map<String, Object> list(Map<String, Object> params) {
+        return eventDao.list(params);
     }
     
 }

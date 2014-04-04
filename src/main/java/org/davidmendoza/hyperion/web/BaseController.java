@@ -36,8 +36,7 @@ public abstract class BaseController {
 
     protected final transient Logger log = LoggerFactory.getLogger(getClass());
 
-    protected void paginate(Map<String, Object> params, Model model,
-            String lista, Long page) {
+    protected void paginate(Map<String, Object> params, Model model, Long page) {
         if (page != null) {
             params.put("page", page);
             model.addAttribute("page", page);
@@ -49,7 +48,7 @@ public abstract class BaseController {
         Long totalItems = (Long) params.get("totalItems");
         Integer max = (Integer) params.get("max");
         List<Long> pageList = pagination(page, totalItems, max);
-        List<?> list = (List<?>) params.get(lista);
+        List<?> list = (List<?>) params.get("list");
         Long first = ((page - 1) * max) + 1;
         Long last = first + (list.size() - 1);
         String[] pagination = new String[]{first.toString(),

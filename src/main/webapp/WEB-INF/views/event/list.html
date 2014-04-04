@@ -1,0 +1,107 @@
+<!--
+The MIT License
+
+Copyright 2014 J. David Mendoza.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="/layouts/main :: head('Event List')">
+        <title>LIST</title>
+
+        <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css" th:href="@{/resources/css/font-awesome.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-fixed-top" role="banner" th:substituteby="/layouts/main :: navigation('event')">
+        </header>
+
+        <div class="container">
+            <div class="row content" style="padding-bottom: 50px;">
+                <div class="col-sm-12">
+                    <h1>Events</h1>
+
+                    <form action="#" th:action="@{/event/list}" method="GET" class="form-inline" >
+                        <div class="form-group">
+                            <input type="text" th:value="${filter}" name="filter" id="filter" class="form-control"  />
+                        </div>
+
+                        <button type="submit" class="btn btn-default"><span class="fa fa-search"></span> <span th:text="#{search.label}">Search</span></button>
+                        <a href="#" th:href="@{/event/new}" class="btn btn-primary" ><span class="fa fa-plus"></span> Create Event</a>
+                        <label>
+                            <input type="checkbox" name="mine" th:checked="${mine}" /> Just Show Mine
+                        </label>
+                    </form>
+
+                    <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger">
+                                <h4>Error</h4>
+                                <p th:text="#{${errorMessage}(${errorMessageAttrs})}">Error Message</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" th:unless="${#strings.isEmpty(successMessage)}">
+                        <div class="col-sm-12">
+                            <div class="alert alert-success">
+                                <h4>Success</h4>
+                                <p th:text="#{${successMessage}(${successMessageAttrs})}">Success Message</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" th:each="event : ${list}">
+                        <div class="col-sm-12">
+                            <h2><a href="#" th:href="@{'/event/show/'+${event.id}}" th:text="${event.name}">Event Name</a></h2>
+                            <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
+                            <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
+                            <th:block th:utext="${event.description}">Event description</th:block>
+                        </div>
+                    </div>
+                    
+                    <ul class="pagination" th:unless="${#arrays.isEmpty(list)}">
+                        <li class="disabled"><a href="#" th:text="#{pagination.message(${pagination[0]},${pagination[1]},${pagination[2]})}">Pages</a></li>
+                        <!--/*/ <th-block th:each="pageId : ${pages}"> /*/-->
+                        <li th:class="${page == pageId}?'active'">
+                            <a href="#" th:href="@{'/event/list'(page=${pageId},max=${max},offset=${(pageId - 1) * max},sort=${sort},order=${order2},filter=${filter})}" th:text="${pageId}">1</a>
+                        </li>
+                        <!--/*/ </th-block> /*/-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer role="contentinfo" th:replace="/layouts/main :: footer">
+        </footer>
+
+        <div th:replace="/layouts/main :: scripts">
+            <script src="../../../resources/js/jquery-2.1.0.min.js" th:src="@{/resources/js/jquery-2.1.0.min.js}"></script>
+            <script src="../../../resources/js/jquery-ui.min.js" th:src="@{/resources/js/jquery-ui.min.js}"></script>
+            <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+            <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
+        </div>
+    </body>
+</html>

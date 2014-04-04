@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 J. David Mendoza <jdmendoza@swau.edu>.
+ * Copyright 2014 J. David Mendoza <jdmendozar@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author J. David Mendoza <jdmendoza@swau.edu>
+ * @author J. David Mendoza <jdmendozar@gmail.com>
  */
 @Entity
 @Table(name = "UserConnection")
