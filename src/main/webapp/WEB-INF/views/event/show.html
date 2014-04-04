@@ -1,0 +1,71 @@
+<!--
+The MIT License
+
+Copyright 2014 J. David Mendoza.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="/layouts/main :: head('Confirm Event')">
+        <title>EVENT</title>
+
+        <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css" th:href="@{/resources/css/font-awesome.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-fixed-top" role="banner" th:substituteby="/layouts/main :: navigation('event')">
+        </header>
+
+        <div class="container">
+            <div class="row content">
+                <div class="col-sm-12">
+
+                    <h2 th:text="${event.name}">Event Name</h2>
+                    <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
+                    <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
+                    <th:block th:utext="${event.description}">Event description</th:block>
+
+                    <a href="#" th:href="@{'/event'}" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Events</a>
+                    <a href="#" th:href="@{'/event/edit/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-info btn-lg"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="#" th:href="@{'/event/delete/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure you want to delete this event?');"><i class="fa fa-trash-o"></i> Delete</a>
+                    <a href="#" th:href="@{/event/create}" class="btn btn-primary btn-lg"><span class="fa fa-plus"></span> Create</a>
+                </div>
+            </div>
+        </div>
+
+        <footer role="contentinfo" th:replace="/layouts/main :: footer">
+        </footer>
+
+        <div th:replace="/layouts/main :: scripts" th:remove="tag">
+            <script src="../../../resources/js/jquery-1.10.2.min.js" th:src="@{/resources/js/jquery-1.10.2.min.js}"></script>
+            <script src="../../../resources/js/jquery-migrate-1.2.1.min.js" th:src="@{/resources/js/jquery-migrate-1.2.1.min.js}"></script>
+            <script src="../../../resources/js/jquery-ui.min.js" th:src="@{/resources/js/jquery-ui.min.js}"></script>
+            <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+            <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
+        </div>
+
+    </body>
+</html>
