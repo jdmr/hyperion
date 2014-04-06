@@ -143,6 +143,7 @@ public class EventController extends BaseController {
     @RequestMapping(value = {"", "/list"}, method = RequestMethod.GET)
     public String list(Model model,
             Principal principal,
+            @RequestParam(required = false) Boolean mine,
             @RequestParam(required = false) Integer max,
             @RequestParam(required = false) Integer offset,
             @RequestParam(required = false) String filter,
@@ -177,6 +178,12 @@ public class EventController extends BaseController {
             params.put("order", "asc");
         }
         params.put("order2", params.get("order"));
+        
+        if (mine != null) {
+            log.debug("Mine selected");
+            params.put("mine", Boolean.TRUE);
+            params.put("principal", principal.getName());
+        }
 
         params = eventService.list(params);
 

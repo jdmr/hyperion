@@ -43,15 +43,15 @@ THE SOFTWARE.
                 <div class="col-sm-12">
                     <h1>Events</h1>
 
-                    <form action="#" th:action="@{/event/list}" method="GET" class="form-inline" >
+                    <form action="#" th:action="@{/event/list}" method="GET" class="form-inline" id="searchForm" >
                         <div class="form-group">
                             <input type="text" th:value="${filter}" name="filter" id="filter" class="form-control"  />
                         </div>
 
                         <button type="submit" class="btn btn-default"><span class="fa fa-search"></span> <span th:text="#{search.label}">Search</span></button>
                         <a href="#" th:href="@{/event/create}" class="btn btn-primary" ><span class="fa fa-plus"></span> Create Event</a>
-                        <label>
-                            <input type="checkbox" name="mine" th:checked="${mine}" /> Just Show Mine
+                        <label th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+                            <input type="checkbox" name="mine" id="mine" th:checked="${mine}" /> Just Show Mine
                         </label>
                     </form>
 
@@ -103,5 +103,12 @@ THE SOFTWARE.
             <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
             <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
         </div>
+        <script type="text/javascript">
+            $(function() {
+                $('#mine').change(function() {
+                    $("#searchForm").submit();
+                });
+            });
+        </script>
     </body>
 </html>
