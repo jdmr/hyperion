@@ -24,8 +24,8 @@ THE SOFTWARE.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include='/layouts/main :: head(Home)'>
-        <title th:text="#{login.title}">Login</title>
+    <head th:include="/layouts/main :: head('RSVP')">
+        <title>Login</title>
 
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
@@ -42,15 +42,9 @@ THE SOFTWARE.
         <div class="container">
             <div class="row content">
                 <div class="col-sm-offset-4 col-sm-4">
-                    <form action="#" th:action="@{/code}" method="post" autocomplete="off" name="codeForm">
-                        <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" />
-                        <div class="input-group" style="padding-bottom: 100px;">
-                            <input type="text" class="form-control" name="code" id="code" placeholder="Type your iRSVPed Code" style="text-align: center;" autofocus="autofocus" value="" th:value="${code}"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">RSVP</button>
-                            </span>
-                        </div>
-                    </form>
+                    <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" />
+                    
+                    <h1 class="text-center">THANK YOU!</h1>
                 </div>
             </div>
         </div>

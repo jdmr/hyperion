@@ -28,7 +28,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import org.davidmendoza.hyperion.dao.EventDao;
+import org.davidmendoza.hyperion.dao.UserDao;
 import org.davidmendoza.hyperion.model.Event;
+import org.davidmendoza.hyperion.model.Role;
+import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.service.BaseService;
 import org.davidmendoza.hyperion.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,8 @@ public class EventServiceImpl extends BaseService implements EventService {
 
     @Autowired
     private EventDao eventDao;
+    @Autowired
+    private UserDao userDao;
     
     @Transactional(readOnly = true)
     @Override
@@ -65,6 +70,31 @@ public class EventServiceImpl extends BaseService implements EventService {
     @Override
     public Event get(String eventId) {
         return eventDao.get(eventId);
+    }
+
+    @Override
+    public Event getByCode(String code) {
+        return eventDao.getByCode(code);
+    }
+
+    @Override
+    public String delete(String eventId, String name) {
+        User user = userDao.get(name);
+        boolean isAdmin = false;
+        for(Role role : user.getRoles()) {
+            if (role.getAuthority().contains("ROLE_ADMIN")) {
+                isAdmin = true;
+                break;
+            }
+        }
+        Event event = eventDao.get(eventId);
+        if (isAdmin || event.getUser().getId().equals(user.getId())) {
+            eventDao.delete(event);
+            return event.getName();
+        } else {
+            throw new RuntimeException("You can't delete an event that doesn't belong to you.");
+        }
+        
     }
     
 }

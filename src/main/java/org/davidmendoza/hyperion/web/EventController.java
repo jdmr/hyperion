@@ -165,6 +165,24 @@ public class EventController extends BaseController {
 
         return "event/show";
     }
+    
+    @RequestMapping(value = "/delete/{eventId}", method = RequestMethod.GET)
+    public String delete(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal) {
+        if (principal != null) {
+            try {
+                String name = eventService.delete(eventId, principal.getName());
+                redirectAttributes.addFlashAttribute("successMessage", "event.deleted");
+                redirectAttributes.addFlashAttribute("successMessageAttrs", name);
+            } catch(Exception e) {
+                log.error("Could not delete event", e);
+                redirectAttributes.addFlashAttribute("errorMessage", "event.not.deleted");
+                redirectAttributes.addFlashAttribute("errorMessageAttrs", e.getMessage());
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "event.not.deleted.cause.not.signed.in");
+        }
+        return "redirect:/event";
+    }
 
     @RequestMapping(value = {"", "/list"}, method = RequestMethod.GET)
     public String list(Model model,

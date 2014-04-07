@@ -46,7 +46,36 @@ THE SOFTWARE.
                     <h2 th:text="${event.name}">Event Name</h2>
                     <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
                     <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
+                    <th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" >
+                        <p>Email: <th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></p>
+                        <p>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></p>
+                        <p>Code: <th:block th:text="${event.code}">TEST</th:block></p>
+                    </th:block>
                     <th:block th:utext="${event.description}">Event description</th:block>
+                    <th:block th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)) and not #lists.isEmpty(parties)}" >
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Seats</th>
+                                        <th>Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="party : ${parties}">
+                                        <td th:text="${party.name}">Mendoza's Family</td>
+                                        <td th:text="${party.email}">david@irsvped.com</td>
+                                        <td th:text="${party.phone}">999 999 9999</td>
+                                        <td th:text="${party.seats}">4</td>
+                                        <td th:text="${party.comments}">None</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </th:block>
 
                     <a href="#" th:href="@{'/event'}" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Events</a>
                     <a href="#" th:href="@{'/event/edit/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-info btn-lg"><i class="fa fa-edit"></i> Edit</a>

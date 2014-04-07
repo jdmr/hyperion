@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 J. David Mendoza <jdmendozar@gmail.com>.
+ * Copyright 2014 J. David Mendoza <jdmendoza@swau.edu>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,16 @@
 
 package org.davidmendoza.hyperion.dao;
 
-import java.util.Map;
-import org.davidmendoza.hyperion.model.Event;
+import org.davidmendoza.hyperion.model.Party;
 
 /**
  *
- * @author J. David Mendoza <jdmendozar@gmail.com>
+ * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface EventDao {
+public interface PartyDao {
 
-    public Map<String, Object> list(Map<String, Object> params);
+    public Integer getAllotedSeats(Party party);
 
-    public Event create(Event event);
-
-    public Event get(String eventId);
-
-    public Event getByCode(String code);
-
-    public void delete(Event event);
+    public Party create(Party party);
     
 }

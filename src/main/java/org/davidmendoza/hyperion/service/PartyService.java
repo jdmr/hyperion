@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 J. David Mendoza <jdmendozar@gmail.com>.
+ * Copyright 2014 J. David Mendoza <jdmendoza@swau.edu>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,25 +22,17 @@
  * THE SOFTWARE.
  */
 
-package org.davidmendoza.hyperion.dao;
+package org.davidmendoza.hyperion.service;
 
-import java.util.Map;
-import org.davidmendoza.hyperion.model.Event;
+import org.davidmendoza.hyperion.model.Party;
+import org.davidmendoza.hyperion.utils.NotEnoughSeatsException;
 
 /**
  *
- * @author J. David Mendoza <jdmendozar@gmail.com>
+ * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface EventDao {
+public interface PartyService {
 
-    public Map<String, Object> list(Map<String, Object> params);
-
-    public Event create(Event event);
-
-    public Event get(String eventId);
-
-    public Event getByCode(String code);
-
-    public void delete(Event event);
+    public Party create(Party party) throws NotEnoughSeatsException;
     
 }

@@ -28,6 +28,7 @@ import org.davidmendoza.hyperion.dao.BaseDao;
 import org.davidmendoza.hyperion.dao.EventDao;
 import org.davidmendoza.hyperion.model.Event;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -107,6 +108,22 @@ public class EventDaoHibernate extends BaseDao implements EventDao {
     @Override
     public Event get(String eventId) {
         return (Event) currentSession().get(Event.class, eventId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Event getByCode(String code) {
+        Query query = currentSession().getNamedQuery("findEventByCode");
+        query.setString("code", code);
+        return (Event) query.uniqueResult();
+    }
+
+    @Override
+    public void delete(Event event) {
+        Query query = currentSession().createQuery("delete from Party p where p.event.id = :eventId");
+        query.setString("eventId", event.getId());
+        query.executeUpdate();
+        currentSession().delete(event);
     }
 
 }

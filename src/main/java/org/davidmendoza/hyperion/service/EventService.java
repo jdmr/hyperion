@@ -38,5 +38,9 @@ public interface EventService {
     public Event create(Event event);
 
     public Event get(String eventId);
+
+    public Event getByCode(String code);
+
+    public String delete(String eventId, String name);
     
 }

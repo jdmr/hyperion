@@ -110,6 +110,18 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
             messageDao.create(code);
         }
 
+        Message thankyou = messageDao.get(Constants.THANKS);
+        if (thankyou == null) {
+            thankyou = new Message();
+            thankyou.setName(Constants.THANKS);
+            thankyou.setSubject("Thank you for RSVPing!");
+            StringBuilder content = new StringBuilder();
+            content.append("<p>Thanks for RSVPing to @@EVENT@@!</p>");
+            content.append("<p>Enjoy!</p>");
+            thankyou.setContent(content.toString());
+            messageDao.create(thankyou);
+        }
+
         log.info("Done. Application is running!");
     }
 
