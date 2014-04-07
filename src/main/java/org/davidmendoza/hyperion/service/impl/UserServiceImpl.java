@@ -23,6 +23,7 @@
  */
 package org.davidmendoza.hyperion.service.impl;
 
+import java.util.Map;
 import org.davidmendoza.hyperion.dao.UserDao;
 import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Role;
@@ -74,6 +75,23 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public Connection getConnection(String username) {
         return userDao.getConnection(username);
+    }
+
+    @Override
+    public Map<String, Object> list(Map<String, Object> params) {
+        return userDao.list(params);
+    }
+
+    @Override
+    public User get(Long userId) {
+        return userDao.get(userId);
+    }
+
+    @Override
+    public String delete(Long userId) {
+        User user = userDao.get(userId);
+        userDao.delete(user);
+        return user.getUsername();
     }
 
 }

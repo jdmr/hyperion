@@ -80,6 +80,7 @@ THE SOFTWARE.
                             <li th:class="${activeMenu} == 'event' ? 'active'"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>
                             <li th:class="${activeMenu} == 'login' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/login}">Login</a></li>
                             <li th:class="${activeMenu} == 'signUp' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li"><a href="#" th:href="@{/user/register}"><strong>Sign Up</strong></a></li>
+                            <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
                             <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a id="logoutLink" href="#" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </nav>

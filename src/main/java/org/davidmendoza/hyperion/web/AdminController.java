@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 J. David Mendoza <jdmendozar@gmail.com>.
+ * Copyright 2014 J. David Mendoza <jdmendoza@swau.edu>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,35 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.hyperion.service;
 
-import java.util.Map;
-import org.davidmendoza.hyperion.model.Connection;
-import org.davidmendoza.hyperion.model.Role;
-import org.davidmendoza.hyperion.model.User;
+package org.davidmendoza.hyperion.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
- * @author J. David Mendoza <jdmendozar@gmail.com>
+ * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface UserService {
-
-    public User get(String username);
-
-    public User getByOpenId(String openId);
-
-    public User update(User user);
-
-    public User create(User user);
+@Controller
+@RequestMapping("/admin")
+public class AdminController extends BaseController {
     
-    public Role getRole(String authority);
+    @RequestMapping(method = RequestMethod.GET)
+    public String index() {
+        return "redirect:/admin/user";
+    }
 
-    public Connection getConnection(String username);
-
-    public Map<String, Object> list(Map<String, Object> params);
-
-    public User get(Long userId);
-
-    public String delete(Long userId);
-    
 }

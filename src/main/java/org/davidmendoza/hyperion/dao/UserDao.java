@@ -24,6 +24,7 @@
 
 package org.davidmendoza.hyperion.dao;
 
+import java.util.Map;
 import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Role;
 import org.davidmendoza.hyperion.model.User;
@@ -48,5 +49,11 @@ public interface UserDao {
     public User create(User user);
 
     public Connection getConnection(String username);
+
+    public Map<String, Object> list(Map<String, Object> params);
+
+    public User get(Long userId);
+
+    public void delete(User user);
     
 }
