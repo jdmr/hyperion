@@ -43,7 +43,13 @@ THE SOFTWARE.
             <div class="row content">
                 <div class="col-sm-offset-4 col-sm-4">
                     <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" />
-
+                    <p th:if="${#strings.isEmpty(user.signInProvider)}">
+                        <a href="#" th:href="@{/auth/facebook}" class="btn btn-facebook btn-lg btn-block"><i class="fa fa-facebook-square"></i> <th:block th:text="#{facebook.sign.in}">Sign in with Facebook</th:block></a>
+                        <a href="#" th:href="@{/auth/twitter}"  class="btn btn-twitter  btn-lg btn-block"><i class="fa fa-twitter-square" ></i> <th:block th:text="#{twitter.sign.in}" >Sign in with Twitter</th:block></a>
+                    </p>
+                    
+                    <p th:if="${#strings.isEmpty(user.signInProvider)}" class="text-center" style="padding-top: 20px;">- OR -</p>
+                    
                     <form action="#" th:action="@{/user/register}" th:object="${user}" method="post">
                         <input type="hidden" th:field="*{signInProvider}" th:if="${user.signInProvider != null}" />
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">

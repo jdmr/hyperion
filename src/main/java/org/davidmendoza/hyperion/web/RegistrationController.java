@@ -24,14 +24,21 @@
 package org.davidmendoza.hyperion.web;
 
 import java.util.Arrays;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
+import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.SocialMediaService;
 import org.davidmendoza.hyperion.model.User;
+import org.davidmendoza.hyperion.service.MessageService;
 import org.davidmendoza.hyperion.service.UserService;
+import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -62,6 +69,10 @@ public class RegistrationController extends BaseController {
     private UserService userService;
     @Autowired
     protected AuthenticationManager authenticationManager;
+    @Autowired
+    private JavaMailSender mailSender;
+    @Autowired
+    private MessageService messageService;
 
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model, ProviderSignInUtils providerSignInUtils, HttpSession session) {
@@ -78,7 +89,7 @@ public class RegistrationController extends BaseController {
 
             ConnectionKey providerKey = connection.getKey();
             user.setSignInProvider(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
-            
+
             String imageUrl = connection.getImageUrl();
             log.debug("ImageUrl: {}", imageUrl);
             if (StringUtils.isNotEmpty(imageUrl)) {
@@ -121,7 +132,24 @@ public class RegistrationController extends BaseController {
 
                 if (user.getSignInProvider() != null) {
                     providerSignInUtils.doPostSignUp(user.getUsername(), webRequest);
+                    password = user.getSignInProvider().toString() + " Account";
                 }
+                
+                Message signup = messageService.get(Constants.SIGN_UP);
+                MimeMessage message = mailSender.createMimeMessage();
+                InternetAddress[] addresses = {new InternetAddress("iRSVPed <myrsvplease2@gmail.com>")};
+                message.addFrom(addresses);
+                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                helper.setTo(user.getUsername());
+                helper.setSubject(signup.getSubject());
+                String content = signup.getContent();
+                content = content.replaceAll("@@NAME@@", user.getFirstName());
+                content = content.replaceAll("@@USERNAME@@", user.getUsername());
+                content = content.replaceAll("@@PASSWORD@@", password);
+                
+                helper.setText(content, true);
+                mailSender.send(message);
+
             } else {
                 log.warn("User already exists", user.getUsername());
                 bindingResult.rejectValue("username", "user.email.already.exists");

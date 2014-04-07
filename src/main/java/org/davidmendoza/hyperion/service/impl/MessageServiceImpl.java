@@ -60,5 +60,10 @@ public class MessageServiceImpl extends BaseService implements MessageService {
     public Message update(Message message) {
         return messageDao.update(message);
     }
+
+    @Override
+    public Message get(String name) {
+        return messageDao.get(name);
+    }
     
 }
