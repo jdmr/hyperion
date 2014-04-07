@@ -24,7 +24,10 @@
 
 package org.davidmendoza.hyperion.service;
 
+import java.util.List;
+import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.model.Party;
+import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.utils.NotEnoughSeatsException;
 
 /**
@@ -34,5 +37,7 @@ import org.davidmendoza.hyperion.utils.NotEnoughSeatsException;
 public interface PartyService {
 
     public Party create(Party party) throws NotEnoughSeatsException;
+
+    public List<Party> findAllByEvent(Event event, User user);
     
 }

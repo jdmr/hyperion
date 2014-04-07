@@ -24,6 +24,8 @@
 
 package org.davidmendoza.hyperion.dao;
 
+import java.util.List;
+import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.model.Party;
 
 /**
@@ -35,5 +37,7 @@ public interface PartyDao {
     public Integer getAllotedSeats(Party party);
 
     public Party create(Party party);
+
+    public List<Party> findAllByEvent(Event event);
     
 }

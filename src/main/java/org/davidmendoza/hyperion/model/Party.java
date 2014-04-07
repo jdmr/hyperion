@@ -24,6 +24,7 @@
 package org.davidmendoza.hyperion.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 /**
@@ -51,6 +54,8 @@ public class Party implements Serializable {
     private String phone;
     private Integer seats = 1;
     private String comments;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreated;
     @ManyToOne(optional = false)
     private Event event;
 
@@ -153,6 +158,20 @@ public class Party implements Serializable {
      */
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    /**
+     * @return the dateCreated
+     */
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    /**
+     * @param dateCreated the dateCreated to set
+     */
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     /**

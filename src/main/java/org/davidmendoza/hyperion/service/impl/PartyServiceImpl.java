@@ -23,10 +23,14 @@
  */
 package org.davidmendoza.hyperion.service.impl;
 
+import java.util.Date;
+import java.util.List;
 import org.davidmendoza.hyperion.dao.EventDao;
 import org.davidmendoza.hyperion.dao.PartyDao;
 import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.model.Party;
+import org.davidmendoza.hyperion.model.Role;
+import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.service.BaseService;
 import org.davidmendoza.hyperion.service.PartyService;
 import org.davidmendoza.hyperion.utils.NotEnoughSeatsException;
@@ -57,8 +61,24 @@ public class PartyServiceImpl extends BaseService implements PartyService {
                 throw new NotEnoughSeatsException("There's only " + (event.getSeats() - allotedSeats) + " place(s) available.");
             }
         }
+        party.setDateCreated(new Date());
         party = partyDao.create(party);
         return party;
+    }
+
+    @Override
+    public List<Party> findAllByEvent(Event event, User user) {
+        boolean isAdmin = false;
+        for(Role role : user.getRoles()) {
+            if (role.getAuthority().contains("ROLE_ADMIN")) {
+                isAdmin = true;
+                break;
+            }
+        }
+        if (isAdmin || event.getUser().getId().equals(user.getId())) {
+            return partyDao.findAllByEvent(event);
+        }
+        return null;
     }
 
 }

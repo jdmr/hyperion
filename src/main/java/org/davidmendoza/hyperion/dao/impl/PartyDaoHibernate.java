@@ -27,8 +27,10 @@ package org.davidmendoza.hyperion.dao.impl;
 import java.util.List;
 import org.davidmendoza.hyperion.dao.BaseDao;
 import org.davidmendoza.hyperion.dao.PartyDao;
+import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.model.Party;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -61,6 +63,13 @@ public class PartyDaoHibernate extends BaseDao implements PartyDao {
     public Party create(Party party) {
         currentSession().save(party);
         return party;
+    }
+
+    @Override
+    public List<Party> findAllByEvent(Event event) {
+        Query query = currentSession().createQuery("select p from Party p inner join p.event e where e.id = :eventId");
+        query.setString("eventId", event.getId());
+        return query.list();
     }
     
 }
