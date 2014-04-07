@@ -22,23 +22,25 @@
  * THE SOFTWARE.
  */
 
-package org.davidmendoza.hyperion.web;
+package org.davidmendoza.hyperion.dao;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.Map;
+import org.davidmendoza.hyperion.model.Message;
 
 /**
  *
  * @author J. David Mendoza <jdmendozar@gmail.com>
  */
-@Controller
-@RequestMapping("/admin")
-public class AdminController extends BaseController {
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String index() {
-        return "redirect:/admin/user";
-    }
+public interface MessageDao {
 
+    public Map<String, Object> list(Map<String, Object> params);
+
+    public Message get(Long messageId);
+
+    public Message update(Message message);
+
+    public Message get(String name);
+
+    public Message create(Message message);
+    
 }

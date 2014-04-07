@@ -22,23 +22,43 @@
  * THE SOFTWARE.
  */
 
-package org.davidmendoza.hyperion.web;
+package org.davidmendoza.hyperion.service.impl;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.Map;
+import org.davidmendoza.hyperion.dao.MessageDao;
+import org.davidmendoza.hyperion.model.Message;
+import org.davidmendoza.hyperion.service.BaseService;
+import org.davidmendoza.hyperion.service.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author J. David Mendoza <jdmendozar@gmail.com>
  */
-@Controller
-@RequestMapping("/admin")
-public class AdminController extends BaseController {
+@Service
+@Transactional
+public class MessageServiceImpl extends BaseService implements MessageService {
+
+    @Autowired
+    private MessageDao messageDao;
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String index() {
-        return "redirect:/admin/user";
+    @Transactional(readOnly = true)
+    @Override
+    public Map<String, Object> list(Map<String, Object> params) {
+        return messageDao.list(params);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Message get(Long messageId) {
+        return messageDao.get(messageId);
+    }
+
+    @Override
+    public Message update(Message message) {
+        return messageDao.update(message);
+    }
+    
 }

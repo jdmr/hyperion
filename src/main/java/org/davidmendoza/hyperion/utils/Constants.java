@@ -31,4 +31,6 @@ package org.davidmendoza.hyperion.utils;
 public class Constants {
     public static final String LOGGED_USER = "LOGGED_USER";
     public static final String CREATE = "CREATE";
+    public static final String SIGN_UP = "SIGN_UP";
+    public static final String CODE = "CODE";
 }

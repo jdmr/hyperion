@@ -23,7 +23,9 @@
  */
 package org.davidmendoza.hyperion.utils;
 
+import org.davidmendoza.hyperion.dao.MessageDao;
 import org.davidmendoza.hyperion.dao.UserDao;
+import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.Role;
 import org.davidmendoza.hyperion.model.User;
 import org.slf4j.Logger;
@@ -46,6 +48,8 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private MessageDao messageDao;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -70,6 +74,40 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
             admin.addRole(adminRole);
 
             userDao.create(admin);
+        }
+        
+        log.info("Validating Messages");
+        Message signup = messageDao.get(Constants.SIGN_UP);
+        if (signup == null) {
+            signup = new Message();
+            signup.setName(Constants.SIGN_UP);
+            signup.setSubject("Welcome to iRSVPed!");
+            StringBuilder content = new StringBuilder();
+            content.append("<p>Salut @@NAME@@,</p>");
+            content.append("<p>We are excited to help you create your special event.</p>");
+            content.append("<p>To access your event's reports and settings you'll require to provide your credentials:</p>");
+            content.append("<dl>");
+            content.append("<dt>Email</dt>");
+            content.append("<dd>@@USERNAME@@</dd>");
+            content.append("<dt>Password</dt>");
+            content.append("<dd>@@PASSWORD@@</dd>");
+            content.append("</dl>");
+            content.append("<p>Thanks again for using our service.</p>");
+            signup.setContent(content.toString());
+            messageDao.create(signup);
+        }
+
+        Message code = messageDao.get(Constants.CODE);
+        if (code == null) {
+            code = new Message();
+            code.setName(Constants.CODE);
+            code.setSubject("Your RSVP code is available!");
+            StringBuilder content = new StringBuilder();
+            content.append("<p>Here is your RSVP code for @@EVENT@@, please provide this code to your special guests:</p>");
+            content.append("<p>@@CODE@@</p>");
+            content.append("<p>Enjoy!</p>");
+            code.setContent(content.toString());
+            messageDao.create(code);
         }
 
         log.info("Done. Application is running!");
