@@ -107,6 +107,14 @@ THE SOFTWARE.
             </div>
         </footer>
 
+        <div id="preload" class="hidden">
+            <img src="../../../resources/img/bg1.jpg" th:src="@{/resources/img/bg1.jpg}" alt="" />
+            <img src="../../../resources/img/bg2.jpg" th:src="@{/resources/img/bg2.jpg}" alt="" />
+            <img src="../../../resources/img/bg3.jpg" th:src="@{/resources/img/bg3.jpg}" alt="" />
+            <img src="../../../resources/img/bg4.jpg" th:src="@{/resources/img/bg4.jpg}" alt="" />
+            <img src="../../../resources/img/bg5.jpg" th:src="@{/resources/img/bg5.jpg}" alt="" />
+            <img src="../../../resources/img/bg6.jpg" th:src="@{/resources/img/bg6.jpg}" alt="" />
+        </div>
         <div th:fragment="scripts" th:remove="tag">
             <script src="../../../resources/js/jquery-1.11.0.min.js" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
             <script src="../../../resources/js/jquery-migrate-1.2.1.min.js" th:src="@{/resources/js/jquery-migrate-1.2.1.min.js}"></script>
@@ -115,10 +123,11 @@ THE SOFTWARE.
             <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
             <script type="text/javascript" th:inline="javascript">
                 var imgFolder = /*[[@{/resources/img}]]*/ '';
+                var current = 0;
                 $(function() {
                     var body = $('body');
                     var backgrounds = new Array(
-                        'url('+imgFolder+'/bg.jpg) #333 no-repeat center center fixed',
+                        'url('+imgFolder+'/bg1.jpg) #333 no-repeat center center fixed',
                         'url('+imgFolder+'/bg2.jpg) #333 no-repeat center center fixed',
                         'url('+imgFolder+'/bg3.jpg) #333 no-repeat center center fixed',
                         'url('+imgFolder+'/bg4.jpg) #333 no-repeat center center fixed',
@@ -126,7 +135,6 @@ THE SOFTWARE.
                         'url('+imgFolder+'/bg6.jpg) #333 no-repeat center center fixed'
                     );
 
-                    var current = 0;
                     function nextBackground() {
                         body.css(
                             'background',
