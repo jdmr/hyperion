@@ -26,20 +26,20 @@ body {
   padding-top: 60px;
   color: white;
   font: 16px/1.5em Ubuntu, sans-serif;
-  background: url("/hyperion/resources/img/bg1.jpg") #333333 no-repeat center center fixed;
+  background: #333 no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg1.jpg', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bg1.jpg', sizingMethod='scale')";
-  -webkit-transition: background 2s linear;
-  -moz-transition: background 2s linear;
-  -ms-transition: background 2s linear;
-  -o-transition: background 2s linear;
-  transition: background 2s linear; }
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/hyperion/resources/img/bg1.jpg', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/hyperion/resources/img/bg1.jpg', sizingMethod='scale')";
+  -webkit-transition: background 2s ease;
+  -moz-transition: background 2s ease;
+  -ms-transition: background 2s ease;
+  -o-transition: background 2s ease;
+  transition: background 2s ease; }
   body:before {
-    content: url("/hyperion/resources/img/bg2.jpg") url("/hyperion/resources/img/bg3.jpg") url("/hyperion/resources/img/bg4.jpg") url("/hyperion/resources/img/bg5.jpg") url("/hyperion/resources/img/bg6.jpg");
+    content: url("/hyperion/resources/img/bg1.jpg") url("/hyperion/resources/img/bg2.jpg") url("/hyperion/resources/img/bg3.jpg") url("/hyperion/resources/img/bg4.jpg") url("/hyperion/resources/img/bg5.jpg") url("/hyperion/resources/img/bg6.jpg");
     display: none; }
   body a {
     color: #92bce0; }
