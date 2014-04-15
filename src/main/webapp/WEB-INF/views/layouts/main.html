@@ -152,11 +152,11 @@ THE SOFTWARE.
                         type: 'POST',
                         data: {backgroundId: current, '_csrf': csrf}
                     });
-                    setTimeout(nextBackground, 6000);
+                    setTimeout(nextBackground, 10000);
                 }
                 
                 $(function() {
-                    setTimeout(nextBackground, 6000);
+                    setTimeout(nextBackground, 10000);
                 });
             </script>
             <script th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
