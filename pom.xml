@@ -36,6 +36,11 @@
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/libs-milestone</url>
         </repository>
+        <repository>
+            <id>jasperreports</id>
+            <name>JasperReports Repo</name>
+            <url>http://jasperreports.sourceforge.net/maven2</url>
+        </repository>
     </repositories>
 
     <dependencies>
