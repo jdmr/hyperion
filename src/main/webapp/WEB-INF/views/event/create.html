@@ -54,7 +54,7 @@ THE SOFTWARE.
                                 <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
                                 <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
                             </li>
-                            <li class="active"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
+                            <li id="signup-li"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
                             <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
                             <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
                         </ul>
@@ -97,7 +97,7 @@ THE SOFTWARE.
                             <div class="col-sm-12">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}?'has-error'">
                                     <label class="control-label" for="description" th:text="#{event.description}">Description</label>
-                                    <textarea th:field="*{description}" id="description" class="form-control" ></textarea>
+                                    <textarea th:field="*{description}" id="description" class="form-control" style="height:100px;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -234,10 +234,8 @@ THE SOFTWARE.
             <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
             <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
         </div>
-        <script src="../../../ckeditor/ckeditor.js" th:src="@{/ckeditor/ckeditor.js}"></script>
         <script>
             $(function() {
-                CKEDITOR.replace('description');
                 
                 $('a#logoutLink').click(function(e) {
                     e.preventDefault();

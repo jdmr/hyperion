@@ -1,0 +1,204 @@
+/*
+The MIT License
+
+Copyright 2013 J. David Mendoza <jdmendozar@gmail.com>.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
+body {
+    padding-top: 60px;
+    color: white;
+    font: 16px/1.5em Ubuntu, sans-serif;
+    background: #333 no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/hyperion/resources/img/bg1.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/hyperion/resources/img/bg1.jpg', sizingMethod='scale')";
+    -webkit-transition: background 2s ease;
+    -moz-transition: background 2s ease;
+    -ms-transition: background 2s ease;
+    -o-transition: background 2s ease;
+    transition: background 2s ease;
+    
+    &:before {
+        content: url('/hyperion/resources/img/bg1.jpg') url('/hyperion/resources/img/bg2.jpg') url('/hyperion/resources/img/bg3.jpg') url('/hyperion/resources/img/bg4.jpg') url('/hyperion/resources/img/bg5.jpg') url('/hyperion/resources/img/bg6.jpg');
+        display: none;
+    }
+
+    a {
+        color: lighten(#428bca, 20%);
+        &:hover, &:focus {
+            color: lighten(#428bca, 30%);
+        }
+    }
+
+    #login-popup {
+        position: relative;
+        background-color:rgba(255,255,255,0.8);
+        padding: 20px;
+        width: auto;
+        max-width: 500px;
+        margin: 20px auto;
+        color: #333;
+    }
+
+    .content {
+        background-color:rgba(0,0,0,0.7);
+        padding: 30px 0;
+
+        .app-sidenav {
+            margin: 20px 0;
+            padding: 10px 0;
+            text-shadow: 0 1px 0 #333;
+            background-color: rgba(200,200,200,0.5);
+            border-radius: 5px;
+
+            li.active {
+                a {
+                    font-weight: bold;
+                    color: #FAFAFA;
+                    background-color: rgba(100,100,100,0.8);
+                }
+            }
+
+            li {
+                a {
+                    color: #fff;
+
+                    &:hover {
+                        color: #FAFAFA;
+                        background-color: rgba(200,200,200,0.8);
+                    }
+                }
+            }
+        }
+
+        .table {
+            background-color: rgba(50, 50, 50, 0.8);
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: rgba(100,100,100, 0.5);
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            border-top: 1px solid rgba(200,200,200, 0.5);
+        }
+
+        .table > thead > tr > th {
+            border-bottom: 2px solid rgba(254,254,254, 0.5);;
+        }
+
+        .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+            background-color: #7A7A7A;
+        }
+    }
+
+    .castor-nav {
+        @media(min-width: 768px) and (max-width: 991px) {
+            font-size: 0.75em;
+        }
+    }
+
+    #signup-li {
+        a {
+            background-color: darken(#428bca, 10%);
+            color: darken(#fff, 10%);
+            &:hover, &:focus {
+                background-color: #428bca;
+                color: #fff;
+            }
+        }
+    }
+
+    legend {
+        color: #fff;
+    }
+
+    .help-block {
+        color: #fff;
+    }
+
+    $fb-blue: #0e285f;
+
+    .btn-facebook {
+        background-image: none;
+        background-color: $fb-blue;
+        border-color: $fb-blue;
+        color: lighten($fb-blue, 50%);
+        filter: none;
+    }
+
+    .btn-facebook:hover, .btn-facebook:focus {
+        background-image: none;
+        background-color: lighten($fb-blue, 10%);
+        border-color: $fb-blue;
+        color: lighten($fb-blue, 60%);
+        filter: none;
+    }
+
+    $tw-blue: #2095c0;
+
+    .btn-twitter {
+        background-image: none;
+        background-color: $tw-blue;
+        border-color: $tw-blue;
+        color: lighten($tw-blue, 50%);
+        filter: none;
+    }
+
+    .btn-twitter:hover, .btn-twitter:focus {
+        background-image: none;
+        background-color: lighten($tw-blue, 10%);
+        border-color: $tw-blue;
+        color: lighten($tw-blue, 60%);
+        filter: none;
+    }
+
+    .sidenav {
+        margin: 20px 0;
+        padding: 10px 0;
+        text-shadow: 0 1px 0 #333;
+        background-color: rgba(200,200,200,0.5);
+        border-radius: 5px;
+
+        li.active {
+            a {
+                font-weight: bold;
+                color: #FAFAFA;
+                background-color: rgba(100,100,100,0.8);
+            }
+        }
+
+        li {
+            a {
+                color: #fff;
+
+                &:hover {
+                    color: #FAFAFA;
+                    background-color: rgba(200,200,200,0.8);
+                }
+            }
+        }        
+    }
+}

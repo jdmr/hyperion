@@ -55,7 +55,7 @@ THE SOFTWARE.
                                 <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
                             </li>
                             <li class="disabled"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
-                            <li class="active"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
+                            <li id="signup-li"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
                             <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
                         </ul>
                     </nav>
