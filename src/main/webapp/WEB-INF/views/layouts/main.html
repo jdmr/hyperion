@@ -81,8 +81,8 @@ THE SOFTWARE.
                                 <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
                                 <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
                             </li>
-                            <li th:class="${activeMenu} == 'home' ? 'active'"><a href="#" th:href="@{/}" th:text="#{home.label}">Home</a></li>
-                            <li th:class="${activeMenu} == 'event' ? 'active'"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>
+                            <!--<li th:class="${activeMenu} == 'home' ? 'active'"><a href="#" th:href="@{/}" th:text="#{home.label}">Home</a></li>-->
+                            <!--<li th:class="${activeMenu} == 'event' ? 'active'"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>-->
                             <li th:class="${activeMenu} == 'login' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/login}">Login</a></li>
                             <li th:class="${activeMenu} == 'signUp' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li"><a href="#" th:href="@{/user/register}"><strong>Sign Up</strong></a></li>
                             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>

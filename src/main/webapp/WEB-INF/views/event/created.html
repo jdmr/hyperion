@@ -24,7 +24,7 @@ THE SOFTWARE.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include="/layouts/main :: head('Confirm Event')">
+    <head th:include="/layouts/main :: head('Show Event')">
         <title>EVENT</title>
 
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
@@ -51,13 +51,13 @@ THE SOFTWARE.
                     <nav class="collapse navbar-collapse" role="navigation">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
-                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
+                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" th:href="@{/profile}" >TEST</a>
+                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;" th:href="@{/profile}"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
                             </li>
-                            <li><a id="createLink" href="#" th:text="#{create.label}">Create</a></li>
-                            <li id="signup-li"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/event}" th:text="#{event.label}">Event</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/mine}" th:text="#{profile.label}">Profile</a></li>
+                            <li class="disabled"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
+                            <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
+                            <li id="signup-li"><a href="#" th:href="@{'/event/show/'+${event.id}}" th:text="#{event.label}">Event</a></li>
+                            <li><a href="#" th:href="@{/profile}" th:text="#{profile.label}">Profile</a></li>
                             <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
                         </ul>
                     </nav>
@@ -68,33 +68,23 @@ THE SOFTWARE.
         <div class="container">
             <div class="row content">
                 <div class="col-sm-12">
-                    <form action="#" th:action="@{/event/create}" th:object="${event}" method="post" id="eventForm">
-                        <input type="hidden" th:field="*{name}" id="name" />
-                        <input type="hidden" th:field="*{seats}" id="seats" />
-                        <input type="hidden" th:field="*{description}" id="description" />
-                        <input type="hidden" th:field="*{date}" id="date" />
-                        <input type="hidden" th:field="*{time}" id="time" />
-                        <input type="hidden" th:field="*{hostName}" id="hostName" />
-                        <input type="hidden" th:field="*{hostPhone}" id="hostPhone" />
-                        <input type="hidden" th:field="*{hostEmail}" id="hostEmail" />
-                        <input type="hidden" th:field="*{street}" id="street" />
-                        <input type="hidden" th:field="*{city}" id="city" />
-                        <input type="hidden" th:field="*{state}" id="state" />
-                        <input type="hidden" th:field="*{zip}" id="zip" />
 
-                        <h2 th:text="${event.name}">Event Name</h2>
-                        <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
-                        <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
-                        <th:block th:utext="${event.description}">Event description</th:block>
+                    <h2 th:text="${event.name}">Event Name</h2>
+                    <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
+                    <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
+                    <th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" >
+                        <p>Email: <th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></p>
+                        <p>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></p>
+                        <p>Code: <th:block th:text="${event.code}">TEST</th:block></p>
+                    </th:block>
+                    <th:block th:utext="${event.description}">Event description</th:block>
 
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button type="submit" class="btn btn-success btn-lg" name="confirm"><i class="fa fa-plus"></i> Confirm</button>
-                                <button type="submit" class="btn btn-danger btn-lg" name="cancel" id="cancelBtn"><i class="fa fa-edit"></i> Make Changes</button>
-                            </div>
-                        </div>
-                    </form>
+                    <p>&nbsp;</p>
+                    <a href="#" th:href="@{'/event'}" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Events</a>
+                    <a href="#" th:href="@{'/event/rsvp/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-success btn-lg"><i class="fa fa-list-alt"></i> RSVP's</a>
+                    <a href="#" th:href="@{'/event/edit/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-info btn-lg"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="#" th:href="@{'/event/delete/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure you want to delete this event?');"><i class="fa fa-trash-o"></i> Delete</a>
+                    <a href="#" th:href="@{/event/create}" class="btn btn-primary btn-lg"><span class="fa fa-plus"></span> Create</a>
                 </div>
             </div>
         </div>
@@ -109,14 +99,6 @@ THE SOFTWARE.
             <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
             <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
         </div>
-        <script>
-            $(function() {
-                $('#createLink').click(function(e) {
-                    console.log("Clicked createLink");
-                    e.preventDefault();
-                    $('#cancelBtn').trigger("click");
-                });
-            });
-        </script>
+
     </body>
 </html>

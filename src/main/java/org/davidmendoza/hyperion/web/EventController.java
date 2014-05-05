@@ -149,7 +149,7 @@ public class EventController extends BaseController {
             helper.setText(content, true);
             mailSender.send(message);
 
-            return "redirect:/event/show/" + event.getId();
+            return "redirect:/event/created/" + event.getId();
         } catch (Exception e) {
             log.error("Could not create event", e);
 
@@ -158,6 +158,25 @@ public class EventController extends BaseController {
 
             return back;
         }
+    }
+
+    @RequestMapping(value = "/created/{eventId}", method = RequestMethod.GET)
+    public String created(@PathVariable String eventId, @ModelAttribute("event") Event event, RedirectAttributes redirectAttributes, Model model, Principal principal) {
+        if (event == null || !StringUtils.isNotBlank(event.getName())) {
+            event = eventService.get(eventId);
+            model.addAttribute("event", event);
+        }
+
+        if (principal != null) {
+            User user = userService.get(principal.getName());
+            if (user.getId().equals(event.getUser().getId())) {
+                model.addAttribute("owner", Boolean.TRUE);
+            }
+            List<Party> parties = partyService.findAllByEvent(event, user);
+            model.addAttribute("parties", parties);
+        }
+
+        return "event/created";
     }
 
     @RequestMapping(value = "/show/{eventId}", method = RequestMethod.GET)
