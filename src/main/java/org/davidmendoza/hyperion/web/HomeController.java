@@ -28,12 +28,16 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Event;
+import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.Party;
 import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.service.EventService;
@@ -41,10 +45,12 @@ import org.davidmendoza.hyperion.service.PartyService;
 import org.davidmendoza.hyperion.service.UserService;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -179,4 +185,44 @@ public class HomeController extends BaseController {
         return null;
     }
 
+    @RequestMapping(value = "/profile/edit/{eventId}", method = RequestMethod.GET)
+    public String edit(@PathVariable String eventId, Model model, Principal principal) {
+        Event event = eventService.get(eventId);
+        model.addAttribute("event", event);
+
+        return "home/edit";
+    }
+
+    @RequestMapping(value = "/profile/update", method = RequestMethod.POST)
+    public String update(@Valid Event event, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model, HttpServletRequest request) {
+        String back = "home/edit";
+        if (request.getParameterMap().containsKey("cancel")) {
+            return back;
+        }
+        if (bindingResult.hasErrors()) {
+            log.warn("Could not create event {}", bindingResult.getAllErrors());
+            return back;
+        }
+
+        try {
+            User user = userService.get(principal.getName());
+            event.setUser(user);
+            event.setStatus(Constants.PUBLISHED);
+
+            event = eventService.createOrUpdate(event);
+
+            redirectAttributes.addFlashAttribute("event", event);
+            redirectAttributes.addFlashAttribute("successMessage", "event.updated");
+            redirectAttributes.addFlashAttribute("successMessageAttrs", event.getName());
+
+            return "redirect:/profile/" + event.getId();
+        } catch (Exception e) {
+            log.error("Could not update event", e);
+
+            model.addAttribute("errorMessage", "event.not.updated");
+            model.addAttribute("errorMessageAttr", e.getMessage());
+
+            return back;
+        }
+    }
 }

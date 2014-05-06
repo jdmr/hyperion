@@ -236,6 +236,47 @@ public class EventController extends BaseController {
         return "redirect:/event";
     }
 
+    @RequestMapping(value = "/edit/{eventId}", method = RequestMethod.GET)
+    public String edit(@PathVariable String eventId, Model model, Principal principal) {
+        Event event = eventService.get(eventId);
+        model.addAttribute("event", event);
+
+        return "event/edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(@Valid Event event, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model, HttpServletRequest request) {
+        String back = "event/edit";
+        if (request.getParameterMap().containsKey("cancel")) {
+            return back;
+        }
+        if (bindingResult.hasErrors()) {
+            log.warn("Could not create event {}", bindingResult.getAllErrors());
+            return back;
+        }
+
+        try {
+            User user = userService.get(principal.getName());
+            event.setUser(user);
+            event.setStatus(Constants.PUBLISHED);
+
+            event = eventService.createOrUpdate(event);
+
+            redirectAttributes.addFlashAttribute("event", event);
+            redirectAttributes.addFlashAttribute("successMessage", "event.updated");
+            redirectAttributes.addFlashAttribute("successMessageAttrs", event.getName());
+
+            return "redirect:/event/show/" + event.getId();
+        } catch (Exception e) {
+            log.error("Could not update event", e);
+
+            model.addAttribute("errorMessage", "event.not.updated");
+            model.addAttribute("errorMessageAttr", e.getMessage());
+
+            return back;
+        }
+    }
+
     @RequestMapping(value = "/rsvp/{eventId}", method = RequestMethod.GET)
     public String rsvp(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal, HttpServletResponse response) {
         if (principal != null) {
