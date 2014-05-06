@@ -32,7 +32,7 @@
                     password-parameter="password"
                 />
         <logout logout-url="/logout" logout-success-url="/" invalidate-session="true" />
-        <csrf/>
+        <!--<csrf/>-->
         
         <!-- Adds social authentication filter to the Spring Security filter chain. -->
         <custom-filter ref="socialAuthenticationFilter" before="PRE_AUTH_FILTER" />

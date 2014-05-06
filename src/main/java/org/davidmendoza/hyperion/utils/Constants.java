@@ -35,4 +35,7 @@ public class Constants {
     public static final String CODE = "CODE";
     public static final String THANKS = "THANKS";
     public static final String BACKGROUND_ID = "BACKGROUND_ID";
+    public static final String NEW = "NEW";
+    public static final String DRAFT = "DRAFT";
+    public static final String PUBLISHED = "PUBLISHED";
 }

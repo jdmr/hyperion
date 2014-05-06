@@ -24,6 +24,7 @@
 package org.davidmendoza.hyperion.dao.impl;
 
 import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.dao.BaseDao;
 import org.davidmendoza.hyperion.dao.EventDao;
 import org.davidmendoza.hyperion.model.Event;
@@ -34,6 +35,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,6 +102,7 @@ public class EventDaoHibernate extends BaseDao implements EventDao {
 
     @Override
     public Event create(Event event) {
+        log.debug("Creating event {}", event.getId());
         currentSession().save(event);
         return event;
     }
@@ -124,6 +127,20 @@ public class EventDaoHibernate extends BaseDao implements EventDao {
         query.setString("eventId", event.getId());
         query.executeUpdate();
         currentSession().delete(event);
+    }
+
+    @Override
+    public Event update(Event event) {
+        log.debug("Updating event {}", event.getId());
+        Event e = (Event) currentSession().get(Event.class, event.getId());
+        log.debug("Found event {}", e);
+        if (StringUtils.isBlank(event.getImageName())) {
+            BeanUtils.copyProperties(event, e, new String[]{"id", "dateCreated", "contentType", "imageName", "imageSize", "imageData"});
+        } else {
+            BeanUtils.copyProperties(event, e, new String[]{"id", "dateCreated"});
+        }
+        currentSession().update(e);
+        return e;
     }
 
 }

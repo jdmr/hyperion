@@ -51,7 +51,7 @@ THE SOFTWARE.
                         <p>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></p>
                         <p>Code: <th:block th:text="${event.code}">TEST</th:block></p>
                     </th:block>
-                    <th:block th:utext="${event.description}">Event description</th:block>
+                    <p th:utext="${event.description}">Event description</p>
                     <th:block th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)) and not #lists.isEmpty(parties)}" >
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">

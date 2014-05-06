@@ -26,6 +26,7 @@ package org.davidmendoza.hyperion.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,9 +36,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.davidmendoza.hyperion.utils.Constants;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -52,6 +55,7 @@ public class Event implements Serializable {
     
     @Id
     private String id;
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String code;
     @NotBlank
@@ -93,6 +97,16 @@ public class Event implements Serializable {
     private Date lastUpdated;
     @ManyToOne(optional = false)
     private User user;
+    @Column(length = 32)
+    private String contentType;
+    @Column(length = 64)
+    private String imageName;
+    private Long imageSize;
+    private byte[] imageData;
+    @Transient
+    private MultipartFile imageFile;
+    @Column(length = 32)
+    private String status = Constants.NEW;
     
     public Event() {}
 
@@ -360,6 +374,114 @@ public class Event implements Serializable {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * @return the contentType
+     */
+    public String getContentType() {
+        return contentType;
+    }
+
+    /**
+     * @param contentType the contentType to set
+     */
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    /**
+     * @return the imageName
+     */
+    public String getImageName() {
+        return imageName;
+    }
+
+    /**
+     * @param imageName the imageName to set
+     */
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    /**
+     * @return the imageSize
+     */
+    public Long getImageSize() {
+        return imageSize;
+    }
+
+    /**
+     * @param imageSize the imageSize to set
+     */
+    public void setImageSize(Long imageSize) {
+        this.imageSize = imageSize;
+    }
+
+    /**
+     * @return the imageData
+     */
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    /**
+     * @param imageData the imageData to set
+     */
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    /**
+     * @return the imageFile
+     */
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    /**
+     * @param imageFile the imageFile to set
+     */
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Event other = (Event) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" + "id=" + id + ", code=" + code + ", name=" + name + ", description=" + description + ", date=" + date + ", startDate=" + startDate + ", time=" + time + ", timeZone=" + timeZone + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", seats=" + seats + ", hostName=" + hostName + ", hostPhone=" + hostPhone + ", hostEmail=" + hostEmail + ", dateCreated=" + dateCreated + ", lastUpdated=" + lastUpdated + ", user=" + user + ", contentType=" + contentType + ", imageName=" + imageName + ", imageSize=" + imageSize + ", status=" + status + '}';
     }
     
 }

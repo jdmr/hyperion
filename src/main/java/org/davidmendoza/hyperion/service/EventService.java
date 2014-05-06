@@ -24,6 +24,7 @@
 
 package org.davidmendoza.hyperion.service;
 
+import java.io.IOException;
 import java.util.Map;
 import org.davidmendoza.hyperion.model.Event;
 
@@ -35,12 +36,14 @@ public interface EventService {
 
     public Map<String, Object> list(Map<String, Object> params);
 
-    public Event create(Event event);
+    public Event createOrUpdate(Event event) throws IOException;
 
     public Event get(String eventId);
 
     public Event getByCode(String code);
 
     public String delete(String eventId, String name);
+
+    public boolean isNotUniqueCode(String code);
     
 }

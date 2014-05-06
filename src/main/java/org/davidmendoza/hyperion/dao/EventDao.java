@@ -43,4 +43,6 @@ public interface EventDao {
 
     public void delete(Event event);
     
+    public Event update(Event event);
+
 }

@@ -87,13 +87,17 @@ public class EventController extends BaseController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreate(Model model) {
         Event event = new Event();
+        event.setCode(RandomStringUtils.random(6, true, true));
         model.addAttribute("event", event);
         return "event/create";
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
-    public String confirm(@Valid Event event, BindingResult bindingResult, Model model) throws ParseException {
+    public String confirm(@Valid Event event, BindingResult bindingResult, Model model, Principal principal) throws ParseException {
         String back = "event/create";
+        if (StringUtils.isBlank(event.getId()) && StringUtils.isNotBlank(event.getCode()) && eventService.isNotUniqueCode(event.getCode())) {
+            bindingResult.rejectValue("code", "NotUnique.event.code", new Object[] {event.getCode()}, "Code is not unique");
+        }
         if (bindingResult.hasErrors()) {
             log.warn("Could not create event {}", bindingResult.getAllErrors());
             return back;
@@ -108,6 +112,22 @@ public class EventController extends BaseController {
 
         event.setDate(cal2.getTime());
 
+        User user = userService.get(principal.getName());
+        event.setUser(user);
+        event.setStatus(Constants.DRAFT);
+
+        try {
+            event = eventService.createOrUpdate(event);
+            model.addAttribute("event", event);
+        } catch (Exception e) {
+            log.error("Could not create event", e);
+
+            model.addAttribute("errorMessage", "event.not.created");
+            model.addAttribute("errorMessageAttr", e.getMessage());
+
+            return back;
+        }
+        
         return "event/confirm";
     }
 
@@ -125,9 +145,9 @@ public class EventController extends BaseController {
         try {
             User user = userService.get(principal.getName());
             event.setUser(user);
-            event.setCode(RandomStringUtils.random(6, true, true));
+            event.setStatus(Constants.PUBLISHED);
 
-            event = eventService.create(event);
+            event = eventService.createOrUpdate(event);
 
             redirectAttributes.addFlashAttribute("event", event);
             redirectAttributes.addFlashAttribute("successMessage", "event.created");

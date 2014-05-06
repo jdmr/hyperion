@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package org.davidmendoza.hyperion.service.impl;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.dao.EventDao;
 import org.davidmendoza.hyperion.dao.UserDao;
 import org.davidmendoza.hyperion.model.Event;
@@ -50,7 +51,7 @@ public class EventServiceImpl extends BaseService implements EventService {
     private EventDao eventDao;
     @Autowired
     private UserDao userDao;
-    
+
     @Transactional(readOnly = true)
     @Override
     public Map<String, Object> list(Map<String, Object> params) {
@@ -58,12 +59,23 @@ public class EventServiceImpl extends BaseService implements EventService {
     }
 
     @Override
-    public Event create(Event event) {
+    public Event createOrUpdate(Event event) throws IOException {
         Date date = new Date();
-        event.setDateCreated(date);
         event.setLastUpdated(date);
-        event.setId(UUID.randomUUID().toString());
-        return eventDao.create(event);
+        if (event.getImageFile() != null && !event.getImageFile().isEmpty()) {
+            event.setImageName(event.getImageFile().getOriginalFilename());
+            event.setContentType(event.getImageFile().getContentType());
+            event.setImageSize(event.getImageFile().getSize());
+            event.setImageData(event.getImageFile().getBytes());
+        }
+        if (StringUtils.isBlank(event.getId())) {
+            event.setDateCreated(date);
+            event.setId(UUID.randomUUID().toString());
+            event = eventDao.create(event);
+        } else {
+            event = eventDao.update(event);
+        }
+        return event;
     }
 
     @Transactional(readOnly = true)
@@ -81,7 +93,7 @@ public class EventServiceImpl extends BaseService implements EventService {
     public String delete(String eventId, String name) {
         User user = userDao.get(name);
         boolean isAdmin = false;
-        for(Role role : user.getRoles()) {
+        for (Role role : user.getRoles()) {
             if (role.getAuthority().contains("ROLE_ADMIN")) {
                 isAdmin = true;
                 break;
@@ -94,7 +106,13 @@ public class EventServiceImpl extends BaseService implements EventService {
         } else {
             throw new RuntimeException("You can't delete an event that doesn't belong to you.");
         }
-        
+
     }
-    
+
+    @Override
+    public boolean isNotUniqueCode(String code) {
+        Event event = eventDao.getByCode(code);
+        return event != null;
+    }
+
 }

@@ -69,6 +69,7 @@ THE SOFTWARE.
             <div class="row content">
                 <div class="col-sm-12">
                     <form action="#" th:action="@{/event/create}" th:object="${event}" method="post" id="eventForm">
+                        <input type="hidden" th:field="*{id}" id="id" />
                         <input type="hidden" th:field="*{name}" id="name" />
                         <input type="hidden" th:field="*{seats}" id="seats" />
                         <input type="hidden" th:field="*{description}" id="description" />
@@ -81,12 +82,20 @@ THE SOFTWARE.
                         <input type="hidden" th:field="*{city}" id="city" />
                         <input type="hidden" th:field="*{state}" id="state" />
                         <input type="hidden" th:field="*{zip}" id="zip" />
+                        <input type="hidden" th:field="*{code}" id="code" />
 
                         <h2 th:text="${event.name}">Event Name</h2>
                         <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
                         <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
-                        <th:block th:utext="${event.description}">Event description</th:block>
-
+                        <p>Email: <th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></p>
+                        <p>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></p>
+                        <p>Code: <th:block th:text="${event.code}">TEST</th:block></p>
+                        <p>Street: <th:block th:text="${event.street}">TEST</th:block></p>
+                        <p>City: <th:block th:text="${event.city}">TEST</th:block></p>
+                        <p>State: <th:block th:text="${event.state}">TEST</th:block></p>
+                        <p>ZIP Code: <th:block th:text="${event.zip}">TEST</th:block></p>
+                        <p th:utext="${event.description}" th:unless="${#strings.isEmpty(event.description)}">Event description</p>
+                        <p th:unless="${#strings.isEmpty(event.imageName)}"><img src="#" th:src="@{'/image/'+${event.id}}" th:alt="${event.imageName}" alt="imageName" class='img-responsive' style='width: 100%;'/></p>
 
                         <div class="row">
                             <div class="col-sm-6">

@@ -68,14 +68,23 @@ THE SOFTWARE.
         <div class="container">
             <div class="row content">
                 <div class="col-sm-12">
-                    <form action="#" th:action="@{/event/confirm}" th:object="${event}" method="post" id="eventForm">
-                        <div class="row">
+                    <form action="#" th:action="@{/event/confirm}" th:object="${event}" method="post" id="eventForm" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}" />
+                        <div class="row" th:if="${#fields.hasErrors('*')}">
                             <div class="col-sm-12">
-                                <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                                <div class="alert alert-danger">
                                     <h4 th:text="#{error.event.not.created}">Error</h4>
                                     <ul>
                                         <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Incorrect input</li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger">
+                                    <h4>Error</h4>
+                                    <p th:text="#{${errorMessage}(${errorMessageAttr})}">Error Message</p>
                                 </div>
                             </div>
                         </div>
@@ -212,6 +221,21 @@ THE SOFTWARE.
                                 <div class="form-group" th:classappend="${#fields.hasErrors('zip')}?'has-error'">
                                     <label class="control-label" for="zip" th:text="#{event.zip}">ZIP Code</label>
                                     <input type="text" th:field="*{zip}" id="zip" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('imageFile')}?'has-error'">
+                                    <label class="control-label" for="imageFile" th:text="#{event.imageFile}">Image</label>
+                                    <input type="file" th:field="*{imageFile}" id="imageFile" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('code')}?'has-error'">
+                                    <label class="control-label" for="code" th:text="#{event.code}">Code</label>
+                                    <input type="text" th:field="*{code}" id="code" class="form-control" />
                                 </div>
                             </div>
                         </div>
