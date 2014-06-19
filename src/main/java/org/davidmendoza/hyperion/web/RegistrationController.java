@@ -29,6 +29,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.SocialMediaService;
@@ -54,8 +55,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -134,7 +137,7 @@ public class RegistrationController extends BaseController {
                     providerSignInUtils.doPostSignUp(user.getUsername(), webRequest);
                     password = user.getSignInProvider().toString() + " Account";
                 }
-                
+
                 Message signup = messageService.get(Constants.SIGN_UP);
                 MimeMessage message = mailSender.createMimeMessage();
                 InternetAddress[] addresses = {new InternetAddress("iRSVPed <myrsvplease2@gmail.com>")};
@@ -146,7 +149,7 @@ public class RegistrationController extends BaseController {
                 content = content.replaceAll("@@NAME@@", user.getFirstName());
                 content = content.replaceAll("@@USERNAME@@", user.getUsername());
                 content = content.replaceAll("@@PASSWORD@@", password);
-                
+
                 helper.setText(content, true);
                 mailSender.send(message);
 
@@ -161,5 +164,47 @@ public class RegistrationController extends BaseController {
             log.error("Could not register user", e);
             return back;
         }
+    }
+
+    @RequestMapping(value = "/user/forgot", method = RequestMethod.GET)
+    public String forgot(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "user/forgot";
+    }
+
+    @RequestMapping(value = "/user/forgot", method = RequestMethod.POST)
+    public String forgot(@RequestParam String username, RedirectAttributes redirectAttributes) {
+        log.debug("Username: {}", username);
+        if (StringUtils.isNotEmpty(username)) {
+            
+            User user = userService.get(username);
+
+            if (user != null) {
+                String password = RandomStringUtils.random(6, false, true);
+                user.setPassword(password);
+                userService.update(user);
+
+                try {
+                    Message forgot = messageService.get(Constants.FORGOT);
+                    MimeMessage message = mailSender.createMimeMessage();
+                    InternetAddress[] addresses = {new InternetAddress("iRSVPed <myrsvplease2@gmail.com>")};
+                    message.addFrom(addresses);
+                    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                    helper.setTo(user.getUsername());
+                    helper.setSubject(forgot.getSubject());
+                    String content = forgot.getContent();
+                    content = content.replaceAll("@@NAME@@", user.getFirstName());
+                    content = content.replaceAll("@@USERNAME@@", user.getUsername());
+                    content = content.replaceAll("@@PASSWORD@@", password);
+
+                    helper.setText(content, true);
+                    mailSender.send(message);
+                } catch (Exception e) {
+                    log.error("Could not send forgot email", e);
+                }
+            }
+        }
+        return "redirect:/";
     }
 }

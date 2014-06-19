@@ -45,7 +45,7 @@ THE SOFTWARE.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" style="height:45px;"/></a>
+                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo2.png" th:src="@{/resources/img/logo2.png}" alt="iRSVPed.com" style="height:45px;"/></a>
                 </div>
                 <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
                     <nav class="collapse navbar-collapse" role="navigation">
@@ -84,11 +84,9 @@ THE SOFTWARE.
                     <p th:utext="${event.description}" th:unless="${#strings.isEmpty(event.description)}">Event description</p>
                     <p th:unless="${#strings.isEmpty(event.imageName)}"><img src="#" th:src="@{'/image/'+${event.id}}" th:alt="${event.imageName}" alt="imageName" class='img-responsive' style='width: 100%;'/></p>
 
-                    <a href="#" th:href="@{'/event'}" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Events</a>
                     <a href="#" th:href="@{'/event/rsvp/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-success btn-lg"><i class="fa fa-list-alt"></i> RSVP's</a>
                     <a href="#" th:href="@{'/event/edit/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-info btn-lg"><i class="fa fa-edit"></i> Edit</a>
                     <a href="#" th:href="@{'/event/delete/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure you want to delete this event?');"><i class="fa fa-trash-o"></i> Delete</a>
-                    <a href="#" th:href="@{/event/create}" class="btn btn-primary btn-lg"><span class="fa fa-plus"></span> Create</a>
                 </div>
             </div>
         </div>

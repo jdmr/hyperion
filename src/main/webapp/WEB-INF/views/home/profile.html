@@ -54,6 +54,7 @@ THE SOFTWARE.
                                 <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
                             </li>
                             <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li" ><a href="#" th:href="@{/profile}" th:text="#{profile.label}">Profile</a></li>
+                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/event/create}" >Create Event</a></li>
                             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>
                             <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
                             <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a id="logoutLink" href="#" th:href="@{/logout}">Logout</a></li>
@@ -66,7 +67,6 @@ THE SOFTWARE.
         <div class="container">
             <div class="row content" style="padding-bottom: 50px;">
                 <div class="col-sm-12">
-                    <h1>Profile</h1>
 
                     <form action="#" th:action="@{/event/list}" method="GET" class="form-inline" id="searchForm" >
                         <input type="hidden" name="mine" id="mine" value="1" />
@@ -75,7 +75,6 @@ THE SOFTWARE.
                         </div>
 
                         <button type="submit" class="btn btn-default"><span class="fa fa-search"></span> <span th:text="#{search.label}">Search</span></button>
-                        <a href="#" th:href="@{/event/create}" class="btn btn-primary" ><span class="fa fa-plus"></span> Create Event</a>
                     </form>
 
                     <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">

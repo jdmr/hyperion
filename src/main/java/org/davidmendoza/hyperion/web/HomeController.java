@@ -28,8 +28,6 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +35,6 @@ import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Event;
-import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.Party;
 import org.davidmendoza.hyperion.model.User;
 import org.davidmendoza.hyperion.service.EventService;
@@ -45,7 +42,6 @@ import org.davidmendoza.hyperion.service.PartyService;
 import org.davidmendoza.hyperion.service.UserService;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -76,10 +72,10 @@ public class HomeController extends BaseController {
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String home(HttpSession session) {
         log.debug("Showing home page");
-        if (session.getAttribute("imageUrl") == null && session.getAttribute("noImageUrl") == null) {
-            log.debug("Looking for authenticated user");
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null && !auth.getName().equals("anonymousUser")) {
+        log.debug("Looking for authenticated user");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && !auth.getName().equals("anonymousUser")) {
+            if (session.getAttribute("imageUrl") == null && session.getAttribute("noImageUrl") == null) {
                 log.debug("Looking for social connection for {}", auth.getName());
                 Connection connection = userService.getConnection(auth.getName());
                 if (connection != null) {
@@ -87,8 +83,8 @@ public class HomeController extends BaseController {
                 } else {
                     session.setAttribute("noImageUrl", Boolean.TRUE);
                 }
-                return "redirect:/profile";
             }
+            return "redirect:/profile";
         }
         return "home/home";
     }

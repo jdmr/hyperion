@@ -122,6 +122,18 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
             messageDao.create(thankyou);
         }
 
+        Message forgot = messageDao.get(Constants.FORGOT);
+        if (forgot == null) {
+            forgot = new Message();
+            forgot.setName(Constants.FORGOT);
+            forgot.setSubject("Here's your new password");
+            StringBuilder content = new StringBuilder();
+            content.append("<p>Use <strong>@@PASSWORD@@</strong> as your password with this email to create your own events on <a href='http://java2.swau.edu/hyperion'>iRSVPed.com</a>!</p>");
+            content.append("<p>Enjoy!</p>");
+            forgot.setContent(content.toString());
+            messageDao.create(forgot);
+        }
+
         log.info("Done. Application is running!");
     }
 

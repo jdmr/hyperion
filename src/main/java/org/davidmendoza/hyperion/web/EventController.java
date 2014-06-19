@@ -87,7 +87,7 @@ public class EventController extends BaseController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreate(Model model) {
         Event event = new Event();
-        event.setCode(RandomStringUtils.random(6, true, true));
+        event.setCode(RandomStringUtils.random(6, false, true));
         model.addAttribute("event", event);
         return "event/create";
     }
