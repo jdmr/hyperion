@@ -45,6 +45,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
@@ -76,6 +77,8 @@ public class RegistrationController extends BaseController {
     private JavaMailSender mailSender;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model, ProviderSignInUtils providerSignInUtils, HttpSession session) {
@@ -182,7 +185,9 @@ public class RegistrationController extends BaseController {
 
             if (user != null) {
                 String password = RandomStringUtils.random(6, false, true);
-                user.setPassword(password);
+                String encoded = passwordEncoder.encode(password);
+                user.setPassword(encoded);
+                user.setPasswordVerification(encoded);
                 userService.update(user);
 
                 try {
@@ -200,6 +205,8 @@ public class RegistrationController extends BaseController {
 
                     helper.setText(content, true);
                     mailSender.send(message);
+                    
+                    redirectAttributes.addFlashAttribute("successMessage", "forgot.password.email.sent");
                 } catch (Exception e) {
                     log.error("Could not send forgot email", e);
                 }

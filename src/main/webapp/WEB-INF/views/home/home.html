@@ -44,13 +44,34 @@ THE SOFTWARE.
                 <div class="col-sm-offset-4 col-sm-4">
                     <form action="#" th:action="@{/code}" method="post" autocomplete="off" name="codeForm">
                         <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" style="padding-top:70px;" />
-                        <div class="input-group" style="padding-bottom: 130px;">
+                        <div class="input-group">
                             <input type="text" class="form-control" name="code" id="code" placeholder="Type your iRSVPed Code" style="text-align: center;" autofocus="autofocus" value="" th:value="${code}"/>
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" type="submit">RSVP</button>
                             </span>
                         </div>
                     </form>
+                        
+                    <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger">
+                                <h4>Error</h4>
+                                <p th:text="#{${errorMessage}(${errorMessageAttrs})}">Error Message</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" th:unless="${#strings.isEmpty(successMessage)}" style="padding-top: 20px;">
+                        <div class="col-sm-12">
+                            <div class="alert alert-success">
+                                <h4>Success</h4>
+                                <p th:text="#{${successMessage}(${successMessageAttrs})}">Success Message</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="height: 130px;"></div>
+
                 </div>
             </div>
         </div>
