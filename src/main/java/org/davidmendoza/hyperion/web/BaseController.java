@@ -30,6 +30,10 @@ import java.util.Map;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 
 public abstract class BaseController {
@@ -165,5 +169,29 @@ public abstract class BaseController {
 
         log.debug("Pages {}: {}", page, pageList);
         return new ArrayList<>(pageList);
+    }
+    
+    public UserDetails getUserDetails(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+          return (UserDetails)principal;
+        } else {
+          return null;
+        }
+    }
+    
+    public Boolean hasPrivileges(String role){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth == null) return false;
+        
+        for(GrantedAuthority authority : auth.getAuthorities()){
+            log.debug("authority.getAuthority() - {}", authority.getAuthority());
+            
+            if(authority.getAuthority().equals(role)){
+                return true;
+            }
+        }
+        return false;  
     }
 }

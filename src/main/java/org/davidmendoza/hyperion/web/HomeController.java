@@ -134,9 +134,21 @@ public class HomeController extends BaseController {
         }
         params.put("order2", params.get("order"));
 
-        params.put("mine", Boolean.TRUE);
         params.put("principal", principal.getName());
 
+        //Validar rol del usuario actual, ya que solo ADMIN puede ver todos los eventos
+        //Los demas usuarios veran solo sus registros
+        
+        if(hasPrivileges("ROLE_ADMIN")){
+            log.debug("Es ADMIN");
+            //Puede ver todos los registros
+            params.remove("mine");
+        }
+        else{
+            //Es USER, solo ve sus propios registros
+            params.put("mine", Boolean.TRUE);
+            
+        }
         params = eventService.list(params);
 
         this.paginate(params, model, page);
