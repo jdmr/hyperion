@@ -35,33 +35,8 @@ THE SOFTWARE.
     </head>
     <body>
 
-        <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-            <div class="container" style="padding: 0;">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo2.png" th:src="@{/resources/img/logo2.png}" alt="iRSVPed.com" style="height:50px;"/></a>
-                </div>
-                <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
-                    <nav class="collapse navbar-collapse" role="navigation">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
-                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
-                            </li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li" ><a href="#" th:href="@{/profile}" th:text="#{profile.label}">Profile</a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/event/create}" >Create Event</a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a id="logoutLink" href="#" th:href="@{/logout}">Logout</a></li>
-                        </ul>
-                    </nav>
-                </form>
-            </div>
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('activeMenu')">
+            
         </header>
 
         <div class="container">

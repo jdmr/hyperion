@@ -73,18 +73,36 @@ THE SOFTWARE.
                 <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
                     <nav class="collapse navbar-collapse" role="navigation">
                         <ul class="nav navbar-nav navbar-right">
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
-                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
+                            
+                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/event/create}" >Create Event</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Profile
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/profile}">
+                                            <span class="glyphicon glyphicon-list"></span>&nbsp;Events</a>
+                                    </li>
+                                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
+                                    <li>
+                                        <a href="#"><span class="glyphicon glyphicon-edit"></span>&nbsp;Settings</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-envelope"></span>&nbsp;Feedback
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a id="logoutLink" href="#" th:href="@{/logout}">
+                                            <span class="glyphicon glyphicon-off"></span>&nbsp;Logout
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li th:class="${activeMenu} == 'profile' ? 'active'" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/profile}" th:text="#{profile.label}">Profile</a></li>
-                            <!--<li th:class="${activeMenu} == 'home' ? 'active'"><a href="#" th:href="@{/}" th:text="#{home.label}">Home</a></li>-->
-                            <!--<li th:class="${activeMenu} == 'event' ? 'active'"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>-->
-                            <li th:class="${activeMenu} == 'login' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/login}">Login</a></li>
-                            <li th:class="${activeMenu} == 'signUp' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li"><a href="#" th:href="@{/user/register}"><strong>Sign Up</strong></a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/event}" th:text="#{event.list.label}">Event</a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
-                            <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a id="logoutLink" href="#" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </nav>
                 </form>

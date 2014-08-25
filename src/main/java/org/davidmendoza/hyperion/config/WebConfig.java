@@ -51,6 +51,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 /**
  *
@@ -91,6 +92,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         Set<IDialect> dialects = new HashSet<>();
         dialects.add(new SpringSecurityDialect());
         SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setTemplateResolver(templateResolver());
         engine.setTemplateResolver(templateResolver());
         engine.setAdditionalDialects(dialects);
         return engine;
