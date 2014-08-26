@@ -36,33 +36,8 @@ THE SOFTWARE.
     </head>
     <body>
 
-        <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-            <div class="container" style="padding: 0;">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo2.png" th:src="@{/resources/img/logo2.png}" alt="iRSVPed.com" style="height:45px;"/></a>
-                </div>
-                <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
-                    <nav class="collapse navbar-collapse" role="navigation">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" >TEST</a>
-                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
-                            </li>
-                            <li id="signup-li"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/event}" th:text="#{event.label}">Event</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/mine}" th:text="#{profile.label}">Profile</a></li>
-                            <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
-                        </ul>
-                    </nav>
-                </form>
-            </div>
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('activeMenu')">
+            
         </header>
 
         <div class="container">
@@ -120,58 +95,24 @@ THE SOFTWARE.
                                     <input type="text" th:field="*{startDate}" id="startDate" class="form-control" />
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group" th:classappend="${#fields.hasErrors('time')}?'has-error'">
-                                    <label class="control-label" for="time" th:text="#{event.time}">Time</label>
-                                    <select name="time" id="time" class="form-control" th:field="*{time}">
-                                        <option value="18:00">06:00 pm</option>
-                                        <option value="18:30">06:30 pm</option>
-                                        <option value="19:00">07:00 pm</option>
-                                        <option value="19:30">07:30 pm</option>
-                                        <option value="20:00">08:00 pm</option>
-                                        <option value="20:30">08:30 pm</option>
-                                        <option value="21:00">09:00 pm</option>
-                                        <option value="21:30">09:30 pm</option>
-                                        <option value="22:00">10:00 pm</option>
-                                        <option value="22:30">10:30 pm</option>
-                                        <option value="23:00">11:00 pm</option>
-                                        <option value="23:30">11:30 pm</option>
-                                        <option value="00:00">00:00 am</option>
-                                        <option value="00:30">00:30 am</option>
-                                        <option value="01:00">01:00 am</option>
-                                        <option value="01:30">01:30 am</option>
-                                        <option value="02:00">02:00 am</option>
-                                        <option value="02:30">02:30 am</option>
-                                        <option value="03:00">03:00 am</option>
-                                        <option value="03:30">03:30 am</option>
-                                        <option value="04:00">04:00 am</option>
-                                        <option value="04:30">04:30 am</option>
-                                        <option value="05:00">05:00 am</option>
-                                        <option value="05:30">05:30 am</option>
-                                        <option value="06:00">06:00 am</option>
-                                        <option value="06:30">06:30 am</option>
-                                        <option value="07:00">07:00 am</option>
-                                        <option value="07:30">07:30 am</option>
-                                        <option value="08:00">08:00 am</option>
-                                        <option value="08:30">08:30 am</option>
-                                        <option value="09:00">09:00 am</option>
-                                        <option value="09:30">09:30 am</option>
-                                        <option value="10:00">10:00 am</option>
-                                        <option value="10:30">10:30 am</option>
-                                        <option value="11:00">11:00 am</option>
-                                        <option value="11:30">11:30 am</option>
-                                        <option value="12:00">12:00 pm</option>
-                                        <option value="12:30">12:30 pm</option>
-                                        <option value="13:00">01:00 pm</option>
-                                        <option value="13:30">01:30 pm</option>
-                                        <option value="14:00">02:00 pm</option>
-                                        <option value="14:30">02:30 pm</option>
-                                        <option value="15:00">03:00 pm</option>
-                                        <option value="15:30">03:30 pm</option>
-                                        <option value="16:00">04:00 pm</option>
-                                        <option value="16:30">04:30 pm</option>
-                                        <option value="17:00">05:00 pm</option>
-                                        <option value="17:30">05:30 pm</option>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hour')}?'has-error'">
+                                    <label class="control-label" for="hour" th:text="#{event.hour}">Hour</label>
+                                    <input type="text" th:field="*{hour}" id="hour" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('minutes')}?'has-error'">
+                                    <label class="control-label" for="minutes" th:text="#{event.minutes}">Hour</label>
+                                    <input type="text" th:field="*{minutes}" id="minutes" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('ampm')}?'has-error'">
+                                    <label class="control-label" for="ampm" th:text="#{event.ampm}">Hour</label>
+                                    <select name="ampm" id="time" class="form-control" th:field="*{ampm}">
+                                        <option value="AM">am</option>
+                                        <option value="PM">pm</option>
                                     </select>
                                 </div>
                             </div>

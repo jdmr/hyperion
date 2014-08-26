@@ -86,6 +86,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreate(Model model) {
+        
         Event event = new Event();
         event.setCode(RandomStringUtils.random(6, false, true));
         model.addAttribute("event", event);
@@ -104,7 +105,11 @@ public class EventController extends BaseController {
         }
 
         Calendar cal = Calendar.getInstance();
-        cal.setTime(sdf.parse(event.getTime()));
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR, Integer.parseInt(event.getHour()));
+        cal.set(Calendar.MINUTE, Integer.parseInt(event.getMinutes()));
+        cal.set(Calendar.AM_PM, event.getAmpm().equals("AM") ? Calendar.AM : Calendar.PM);
+        
         Calendar cal2 = Calendar.getInstance();
         cal2.setTime(event.getStartDate());
         cal2.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));

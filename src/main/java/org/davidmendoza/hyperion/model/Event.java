@@ -72,6 +72,12 @@ public class Event implements Serializable {
     @Transient
     private String time;
     @Transient
+    private String hour;
+    @Transient
+    private String minutes;
+    @Transient
+    private String ampm;
+    @Transient
     private String timeZone;
     private String street;
     private String city;
@@ -208,6 +214,54 @@ public class Event implements Serializable {
         this.time = time;
     }
 
+    /**
+     * 
+     * @return the hour 
+     */
+    public String getHour() {
+        return hour;
+    }
+
+    /**
+     * 
+     * @param hour the hour to set
+     */
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    /**
+     * 
+     * @return the minutes
+     */
+    public String getMinutes() {
+        return minutes;
+    }
+
+    /**
+     * 
+     * @param minutes the minutes to set
+     */
+    public void setMinutes(String minutes) {
+        this.minutes = minutes;
+    }
+
+    /**
+     * 
+     * @return am or pm
+     */
+    public String getAmpm() {
+        return ampm;
+    }
+
+    /**
+     * 
+     * @param ampm the am or pm to set
+     */
+    public void setAmpm(String ampm) {
+        this.ampm = ampm;
+    }
+    
     /**
      * @return the timeZone
      */
