@@ -84,23 +84,23 @@ THE SOFTWARE.
                         <input type="hidden" th:field="*{zip}" id="zip" />
                         <input type="hidden" th:field="*{code}" id="code" />
 
-                        <h2 th:text="${event.name}">Event Name</h2>
-                        <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
-                        <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
-                        <p>Email: <th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></p>
-                        <p>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></p>
-                        <p>Code: <th:block th:text="${event.code}">TEST</th:block></p>
-                        <p>Street: <th:block th:text="${event.street}">TEST</th:block></p>
-                        <p>City: <th:block th:text="${event.city}">TEST</th:block></p>
-                        <p>State: <th:block th:text="${event.state}">TEST</th:block></p>
-                        <p>ZIP Code: <th:block th:text="${event.zip}">TEST</th:block></p>
-                        <p th:utext="${event.description}" th:unless="${#strings.isEmpty(event.description)}">Event description</p>
+                        <h1><span class="label label-info"> <th:block th:text="${event.name}">Event Name</th:block></span></h1><br/>
+                        <h4>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></h4>
+                        <h4>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></h4>
+                        <h4>Email: <th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></h4>
+                        <h4>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></h4>
+                        <h4>Code: <th:block th:text="${event.code}">TEST</th:block></h4>
+                        <h4>Street: <th:block th:text="${event.street}">TEST</th:block></h4>
+                        <h4>City: <th:block th:text="${event.city}">TEST</th:block></h4>
+                        <h4>State: <th:block th:text="${event.state}">TEST</th:block></h4>
+                        <h4>ZIP Code: <th:block th:text="${event.zip}">TEST</th:block></h4>
+                        <h4><th:block th:utext="${event.description}" th:unless="${#strings.isEmpty(event.description)}">Event description</th:block></h4>
                         <p th:unless="${#strings.isEmpty(event.imageName)}"><img src="#" th:src="@{'/image/'+${event.id}}" th:alt="${event.imageName}" alt="imageName" class='img-responsive' style='width: 100%;'/></p>
 
                         <div class="row">
                             <div class="col-sm-6">
-                                <button type="submit" class="btn btn-success btn-lg" name="confirm"><i class="fa fa-plus"></i> Confirm</button>
                                 <button type="submit" class="btn btn-danger btn-lg" name="cancel" id="cancelBtn"><i class="fa fa-edit"></i> Make Changes</button>
+                                <button type="submit" class="btn btn-success btn-lg" name="confirm"><i class="fa fa-plus"></i> Confirm</button>
                             </div>
                         </div>
                     </form>
