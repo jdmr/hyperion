@@ -12,6 +12,6 @@ hyperion-test.log**
 .project
 .settings
 .sass-cache
-/src/main/resources/hyperion.properties
+hyperion.properties
 Thumbs.db
 rebel.xml
