@@ -33,7 +33,10 @@ body {
         color: lighten(#428bca, 20%);
         &:hover, &:focus {
             color: lighten(#428bca, 30%);
+
         }
+
+        
     }
 
     #login-popup {
@@ -184,5 +187,13 @@ body {
                 }
             }
         }        
+    }
+
+    .element-centered {
+       position: absolute;
+       width: 100%;
+       left: 0;
+       text-align: center;
+       margin: auto;
     }
 }

@@ -119,3 +119,9 @@ body {
       body .sidenav li a:hover {
         color: #FAFAFA;
         background-color: rgba(200, 200, 200, 0.8); }
+  body .element-centered {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto; }

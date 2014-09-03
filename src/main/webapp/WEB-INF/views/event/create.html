@@ -37,12 +37,35 @@ THE SOFTWARE.
     <body>
 
         <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('activeMenu')">
-            
+
         </header>
 
         <div class="container">
             <div class="row content">
                 <div class="col-sm-12">
+                    
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="navbar navbar-default navbar-inverse" role="navigation">
+                            <div class="container-fluid container-xs-height">
+                                <div class="navbar-inverse">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <h4><span class="label label-danger">Create</span></h4>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <h4><span class="label label-default">Confirm</span></h4>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <h4><span class="label label-default">Created</span></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+
                     <form action="#" th:action="@{/event/confirm}" th:object="${event}" method="post" id="eventForm" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}" />
                         <div class="row" th:if="${#fields.hasErrors('*')}">
@@ -165,7 +188,7 @@ THE SOFTWARE.
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('imageFile')}?'has-error'">
@@ -203,12 +226,12 @@ THE SOFTWARE.
         </div>
         <script>
             $(function() {
-                
+
                 $('a#logoutLink').click(function(e) {
                     e.preventDefault();
                     $('#logoutForm').submit();
                 });
-                
+
                 $('#startDate').datepicker({
                     minDate: '+0d',
                     maxDate: '+18m'

@@ -36,38 +36,35 @@ THE SOFTWARE.
     </head>
     <body>
 
-        <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-            <div class="container" style="padding: 0;">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo2.png" th:src="@{/resources/img/logo2.png}" alt="iRSVPed.com" style="height:45px;"/></a>
-                </div>
-                <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
-                    <nav class="collapse navbar-collapse" role="navigation">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" th:href="@{/profile}" >TEST</a>
-                                <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;" th:href="@{/profile}"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
-                            </li>
-                            <li class="disabled"><a href="#" th:href="@{/event/create}" th:text="#{create.label}">Create</a></li>
-                            <li class="disabled"><a href="#" th:href="@{/event/confirm}" th:text="#{confirm.label}">Confirm</a></li>
-                            <li id="signup-li"><a href="#" th:href="@{'/event/show/'+${event.id}}" th:text="#{event.label}">Event</a></li>
-                            <li><a href="#" th:href="@{/profile}" th:text="#{profile.label}">Profile</a></li>
-                            <li><a id="logoutLink" href="#" th:text="#{logout.label}">Logout</a></li>
-                        </ul>
-                    </nav>
-                </form>
-            </div>
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('activeMenu')">
+
         </header>
 
         <div class="container">
             <div class="row content">
                 <div class="col-sm-12">
+                    
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="navbar navbar-default navbar-inverse" role="navigation">
+                            <div class="container-fluid container-xs-height">
+                                <div class="navbar-inverse">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <h4><span class="label label-danger">Create</span></h4>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <h4><span class="label label-default">Confirm</span></h4>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <h4><span class="label label-default">Created</span></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
 
                     <h1><span class="label label-info"> <th:block th:text="${event.name}">Event Name</th:block></span></h1><br/>
                     <h4>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></h4>
