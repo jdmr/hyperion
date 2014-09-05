@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.davidmendoza.hyperion.model.Connection;
 import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.Party;
@@ -54,6 +55,7 @@ import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,7 +73,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/event")
 public class EventController extends BaseController {
-
+    @Autowired
+    private Facebook facebook;
+    
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     @Autowired
     private EventService eventService;
@@ -366,6 +370,21 @@ public class EventController extends BaseController {
             params.put("mine", Boolean.TRUE);
             params.put("principal", principal.getName());
         }
+        
+        //Validar rol del usuario actual, ya que solo ADMIN puede ver todos los eventos
+        //Los demas usuarios veran solo sus registros
+        
+        if(hasPrivileges("ROLE_ADMIN")){
+            log.debug("Es ADMIN");
+            //Puede ver todos los registros
+            params.remove("mine");
+        }
+        else{
+            //Es USER, solo ve sus propios registros
+            params.put("mine", Boolean.TRUE);
+            params.put("principal", principal.getName());
+            
+        }
 
         params = eventService.list(params);
 
@@ -374,6 +393,18 @@ public class EventController extends BaseController {
         model.addAllAttributes(params);
 
         return "event/list";
+    }
+    
+    @RequestMapping("/shareMyEventOnFB")
+    public void shareEventOnFB(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal, HttpServletResponse response) {
+        if (principal != null) {
+            log.debug("Looking for social connection for {}", principal.getName());
+            Connection connection = userService.getConnection(principal.getName());
+            if (connection != null) {
+                
+                //facebook.feedOperations().post(eventId, eventId);
+            }
+        }
     }
 
 }

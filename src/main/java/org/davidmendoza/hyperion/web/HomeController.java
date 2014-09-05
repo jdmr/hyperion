@@ -147,6 +147,7 @@ public class HomeController extends BaseController {
         else{
             //Es USER, solo ve sus propios registros
             params.put("mine", Boolean.TRUE);
+            params.put("principal", principal.getName());
             
         }
         params = eventService.list(params);

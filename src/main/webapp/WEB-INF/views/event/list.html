@@ -43,7 +43,7 @@ THE SOFTWARE.
                 <div class="col-sm-12">
                     <h1>Events</h1>
 
-                    <form action="#" th:action="@{/event/list}" method="GET" class="form-inline" id="searchForm" >
+                    <!--<form action="#" th:action="@{/event/list}" method="GET" class="form-inline" id="searchForm" >
                         <div class="form-group">
                             <input type="text" th:value="${filter}" name="filter" id="filter" class="form-control"  />
                         </div>
@@ -53,7 +53,7 @@ THE SOFTWARE.
                         <label th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
                             <input type="checkbox" name="mine" id="mine" th:checked="${mine}" /> Just Show Mine
                         </label>
-                    </form>
+                    </form>-->
 
                     <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
                         <div class="col-sm-12">
