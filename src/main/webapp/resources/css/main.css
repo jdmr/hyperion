@@ -119,9 +119,9 @@ body {
       body .sidenav li a:hover {
         color: #FAFAFA;
         background-color: rgba(200, 200, 200, 0.8); }
-  body .element-centered {
-    position: absolute;
+  body .navbar-nav {
     width: 100%;
-    left: 0;
-    text-align: center;
-    margin: auto; }
+    text-align: center; }
+    body .navbar-nav > li {
+      float: none;
+      display: inline-block; }

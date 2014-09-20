@@ -53,6 +53,7 @@ import org.davidmendoza.hyperion.service.PartyService;
 import org.davidmendoza.hyperion.service.UserService;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.social.facebook.api.Facebook;
@@ -73,8 +74,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/event")
 public class EventController extends BaseController {
-    @Autowired
-    private Facebook facebook;
+    //@Autowired
+    //private Facebook facebook;
     
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     @Autowired

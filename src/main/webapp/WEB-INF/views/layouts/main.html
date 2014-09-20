@@ -59,61 +59,62 @@ THE SOFTWARE.
     </head>
     <body>
 
-        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:fragment='navigation(activeMenu)'>
-            <div class="container" style="padding: 0;">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+        <header th:fragment='navigation(activeMenu)'>
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo2.png" th:src="@{/resources/img/logo2.png}" alt="iRSVPed.com" style="height:50px;"/></a>
-                </div>
-                <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
-                    <nav class="collapse navbar-collapse" role="navigation">
-                        <ul class="nav navbar-nav">
-                            <li class="element-centered"><a href="#" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/event/create}">Create Event</a></li>
-                        </ul>    
-                        <ul class="nav navbar-nav navbar-right">
-                            <li th:class="${activeMenu} == 'login' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/login}">Login</a></li>
-                            <li th:class="${activeMenu} == 'signUp' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li"><a href="#" th:href="@{/user/register}"><strong>Sign Up</strong></a></li>
-                            <li class="dropdown" th:class="${activeMenu} == 'profile' ? 'active'" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    Profile
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/profile}">
-                                            <span class="glyphicon glyphicon-list"></span>&nbsp;Events</a>
-                                    </li>
-                                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
-                                    <li>
-                                        <a href="#"><span class="glyphicon glyphicon-edit"></span>&nbsp;Settings</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-envelope"></span>&nbsp;Feedback
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a id="logoutLink" href="#" th:href="@{/logout}">
-                                            <span class="glyphicon glyphicon-off"></span>&nbsp;Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                                <li>
-                                    <a href="#" th:if="${#strings.isEmpty(session.imageUrl)}" th:text="${#authentication.name}" th:href="@{/profile}" >TEST</a>
-                                    <a href="#" th:unless="${#strings.isEmpty(session.imageUrl)}" style="padding: 2px 0 0 0;" th:href="@{/profile}"><img src="#" th:src="${session.imageUrl}" alt="user" th:alt="${#authentication.name}" style="height:45px;"/></a>
+                  </div>
+                  <form action="#" th:action="@{/logout}" method="POST" id="logoutForm">
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                        <li class="pull-left">
+                            <a class="navbar-brand" href="#" th:href="@{/}" style="padding:0 15px;"><img src="../../../resources/img/logo2.png" th:src="@{/resources/img/logo2.png}" alt="iRSVPed.com" style="height:50px;"/></a>
+                        </li>
+                        <li class="active"><a href="#" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/event/create}">Create Event</a></li>
+                        <li th:classappend="'social pull-right'" th:class="${activeMenu} == 'login' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}" ><a href="#" th:href="@{/login}">Login</a></li>
+                        <li th:classappend="'social pull-right'" th:class="${activeMenu} == 'signUp' ? 'active'" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}" id="signup-li"><a href="#" th:href="@{/user/register}"><strong>Sign Up</strong></a></li>
+                        <li class="dropdown" th:classappend="'social pull-right'" th:class="${activeMenu} == 'profile' ? 'active'" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Profile
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"><a href="#" th:href="@{/profile}">
+                                        <span class="glyphicon glyphicon-list"></span>&nbsp;Events</a>
                                 </li>
-                            </li>
-                        </ul>
-                    </nav>
-                </form>
-            </div>
+                                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#" th:href="@{/admin}">Admin</a></li>
+                                <li>
+                                    <a href="#"><span class="glyphicon glyphicon-edit"></span>&nbsp;Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <span class="glyphicon glyphicon-envelope"></span>&nbsp;Feedback
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a id="logoutLink" href="#" th:href="@{/logout}">
+                                        <span class="glyphicon glyphicon-off"></span>&nbsp;Logout
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                        </li>
+                      </ul>
+                    </div><!-- /.navbar-collapse -->
+                  </form>
+                </div><!-- /.container-fluid -->
+              </nav>
         </header>
 
         <div class="container">

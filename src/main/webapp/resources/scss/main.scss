@@ -189,11 +189,12 @@ body {
         }        
     }
 
-    .element-centered {
-       position: absolute;
+    .navbar-nav {
        width: 100%;
-       left: 0;
        text-align: center;
-       margin: auto;
+       > li {
+         float: none;
+         display: inline-block;
+       }
     }
 }
