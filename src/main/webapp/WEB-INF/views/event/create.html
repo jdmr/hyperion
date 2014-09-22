@@ -59,7 +59,6 @@ THE SOFTWARE.
                         </div>
                     </div>
                     <div class="col-md-4"></div>
-
                     <form action="#" th:action="@{/event/confirm}" th:object="${event}" method="post" id="eventForm" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}" />
                         <div class="row" th:if="${#fields.hasErrors('*')}">
