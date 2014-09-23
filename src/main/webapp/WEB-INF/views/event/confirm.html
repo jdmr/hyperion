@@ -40,8 +40,9 @@ THE SOFTWARE.
 
         </header>
         <div class="container">
+            <form action="#" th:action="@{/event/create}" th:object="${event}" method="post" id="eventForm">
             <div class="row content">
-                <div class="col-md-12">
+                <div class="col-sm-12">
                     
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
@@ -59,15 +60,16 @@ THE SOFTWARE.
                     </div>
                     <div class="col-md-4"></div>
                     
-                </div>
+                    <br/>
 
-
-                <div class="col-sm-12">
-                    <form action="#" th:action="@{/event/create}" th:object="${event}" method="post" id="eventForm">
+                    <div class="col-sm-12">
                         <input type="hidden" th:field="*{id}" id="id" />
                         <input type="hidden" th:field="*{name}" id="name" />
                         <input type="hidden" th:field="*{seats}" id="seats" />
                         <input type="hidden" th:field="*{description}" id="description" />
+                        <input type="hidden" th:field="*{hour}" id="hour" />
+                        <input type="hidden" th:field="*{minutes}" id="minutes" />
+                        <input type="hidden" th:field="*{ampm}" id="ampm" />
                         <input type="hidden" th:field="*{date}" id="date" />
                         <input type="hidden" th:field="*{time}" id="time" />
                         <input type="hidden" th:field="*{hostName}" id="hostName" />
@@ -78,7 +80,8 @@ THE SOFTWARE.
                         <input type="hidden" th:field="*{state}" id="state" />
                         <input type="hidden" th:field="*{zip}" id="zip" />
                         <input type="hidden" th:field="*{code}" id="code" />
-
+                    </div>
+                    <div class="col-sm-12">
                         <h1><span class="label label-info"> <th:block th:text="${event.name}">Event Name</th:block></span></h1><br/>
                         <h4>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></h4>
                         <h4>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></h4>
@@ -98,9 +101,10 @@ THE SOFTWARE.
                                 <button type="submit" class="btn btn-success btn-lg" name="confirm"><i class="fa fa-plus"></i> Confirm</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+            </form>
         </div>
 
         <footer role="contentinfo" th:replace="/layouts/main :: footer">

@@ -91,7 +91,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreate(Model model) {
-        
+        log.debug("/event/showCreate");
         Event event = new Event();
         event.setCode(RandomStringUtils.random(6, false, true));
         model.addAttribute("event", event);
@@ -100,6 +100,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
     public String confirm(@Valid Event event, BindingResult bindingResult, Model model, Principal principal) throws ParseException {
+        log.debug("/event/confirm");
         String back = "event/create";
         if (StringUtils.isBlank(event.getId()) && StringUtils.isNotBlank(event.getCode()) && eventService.isNotUniqueCode(event.getCode())) {
             bindingResult.rejectValue("code", "NotUnique.event.code", new Object[] {event.getCode()}, "Code is not unique");
@@ -111,8 +112,8 @@ public class EventController extends BaseController {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        cal.set(Calendar.HOUR, Integer.parseInt(event.getHour()));
-        cal.set(Calendar.MINUTE, Integer.parseInt(event.getMinutes()));
+        cal.set(Calendar.HOUR, event.getHour());
+        cal.set(Calendar.MINUTE, event.getMinutes());
         cal.set(Calendar.AM_PM, event.getAmpm().equals("AM") ? Calendar.AM : Calendar.PM);
         
         Calendar cal2 = Calendar.getInstance();
@@ -143,7 +144,10 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid Event event, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model, HttpServletRequest request) {
+        log.debug("/event/create");
         String back = "event/create";
+        log.debug("Event {}",event);
+        log.debug("Request.hour {}", request.getParameter("hour"));
         if (request.getParameterMap().containsKey("cancel")) {
             return back;
         }
@@ -192,6 +196,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/created/{eventId}", method = RequestMethod.GET)
     public String created(@PathVariable String eventId, @ModelAttribute("event") Event event, RedirectAttributes redirectAttributes, Model model, Principal principal) {
+        log.debug("/event/created");
         if (event == null || !StringUtils.isNotBlank(event.getName())) {
             event = eventService.get(eventId);
             model.addAttribute("event", event);
@@ -211,6 +216,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/show/{eventId}", method = RequestMethod.GET)
     public String show(@PathVariable String eventId, @ModelAttribute("event") Event event, RedirectAttributes redirectAttributes, Model model, Principal principal) {
+        log.debug("/event/show");
         if (event == null || !StringUtils.isNotBlank(event.getName())) {
             event = eventService.get(eventId);
             model.addAttribute("event", event);
@@ -230,6 +236,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/delete/{eventId}", method = RequestMethod.GET)
     public String delete(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal) {
+        log.debug("/event/delete");
         if (principal != null) {
             try {
                 String name = eventService.delete(eventId, principal.getName());
@@ -248,6 +255,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/edit/{eventId}", method = RequestMethod.GET)
     public String edit(@PathVariable String eventId, Model model, Principal principal) {
+        log.debug("/event/edit");
         Event event = eventService.get(eventId);
         model.addAttribute("event", event);
 
@@ -256,6 +264,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@Valid Event event, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model, HttpServletRequest request) {
+        log.debug("/event/update");
         String back = "event/edit";
         if (request.getParameterMap().containsKey("cancel")) {
             return back;
@@ -289,6 +298,7 @@ public class EventController extends BaseController {
 
     @RequestMapping(value = "/rsvp/{eventId}", method = RequestMethod.GET)
     public String rsvp(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal, HttpServletResponse response) {
+        log.debug("/event/rsvp");
         if (principal != null) {
             try {
                 SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a ZZZ");
@@ -398,6 +408,7 @@ public class EventController extends BaseController {
     
     @RequestMapping("/shareMyEventOnFB")
     public void shareEventOnFB(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal, HttpServletResponse response) {
+        log.debug("/event/shareEventOnFB");
         if (principal != null) {
             log.debug("Looking for social connection for {}", principal.getName());
             Connection connection = userService.getConnection(principal.getName());

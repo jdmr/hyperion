@@ -36,6 +36,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -71,11 +73,15 @@ public class Event implements Serializable {
     private Date startDate = new Date();
     @Transient
     private String time;
-    @Transient
-    private String hour;
-    @Transient
-    private String minutes;
-    @Transient
+    @Column
+    @Min(value = 1, message = "Minimum value for hour is 1")
+    @Max(value = 12, message = "Maximum value for hour is 12")
+    private Integer hour;
+    @Column
+    @Min(value = 0, message = "Minimum value for minute is 0")
+    @Max(value = 59, message = "Maximum value for minute is 59")
+    private Integer minutes;
+    @Column(name = "am_pm")
     private String ampm;
     @Transient
     private String timeZone;
@@ -218,7 +224,7 @@ public class Event implements Serializable {
      * 
      * @return the hour 
      */
-    public String getHour() {
+    public Integer getHour() {
         return hour;
     }
 
@@ -226,7 +232,7 @@ public class Event implements Serializable {
      * 
      * @param hour the hour to set
      */
-    public void setHour(String hour) {
+    public void setHour(Integer hour) {
         this.hour = hour;
     }
 
@@ -234,7 +240,7 @@ public class Event implements Serializable {
      * 
      * @return the minutes
      */
-    public String getMinutes() {
+    public Integer getMinutes() {
         return minutes;
     }
 
@@ -242,7 +248,7 @@ public class Event implements Serializable {
      * 
      * @param minutes the minutes to set
      */
-    public void setMinutes(String minutes) {
+    public void setMinutes(Integer minutes) {
         this.minutes = minutes;
     }
 
@@ -535,7 +541,7 @@ public class Event implements Serializable {
 
     @Override
     public String toString() {
-        return "Event{" + "id=" + id + ", code=" + code + ", name=" + name + ", description=" + description + ", date=" + date + ", startDate=" + startDate + ", time=" + time + ", timeZone=" + timeZone + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", seats=" + seats + ", hostName=" + hostName + ", hostPhone=" + hostPhone + ", hostEmail=" + hostEmail + ", dateCreated=" + dateCreated + ", lastUpdated=" + lastUpdated + ", user=" + user + ", contentType=" + contentType + ", imageName=" + imageName + ", imageSize=" + imageSize + ", status=" + status + '}';
+        return "Event{" + "id=" + id + ", code=" + code + ", name=" + name + ", description=" + description + ", date=" + date + ", hour=" + hour + ", minutes=" + minutes + ", startDate=" + startDate + ", time=" + time + ", timeZone=" + timeZone + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", seats=" + seats + ", hostName=" + hostName + ", hostPhone=" + hostPhone + ", hostEmail=" + hostEmail + ", dateCreated=" + dateCreated + ", lastUpdated=" + lastUpdated + ", user=" + user + ", contentType=" + contentType + ", imageName=" + imageName + ", imageSize=" + imageSize + ", status=" + status + '}';
     }
     
 }

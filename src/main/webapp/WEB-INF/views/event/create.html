@@ -119,13 +119,13 @@ THE SOFTWARE.
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('minutes')}?'has-error'">
-                                    <label class="control-label" for="minutes" th:text="#{event.minutes}">Hour</label>
+                                    <label class="control-label" for="minutes" th:text="#{event.minutes}">Minutes</label>
                                     <input type="text" th:field="*{minutes}" id="minutes" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group" th:classappend="${#fields.hasErrors('ampm')}?'has-error'">
-                                    <label class="control-label" for="ampm" th:text="#{event.ampm}">Hour</label>
+                                    <label class="control-label" for="ampm" th:text="#{event.ampm}">AM/PM</label>
                                     <select name="ampm" id="time" class="form-control" th:field="*{ampm}">
                                         <option value="AM">am</option>
                                         <option value="PM">pm</option>
