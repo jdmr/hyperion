@@ -75,7 +75,7 @@ THE SOFTWARE.
                             </table>
                         </div>
                     </th:block>
-
+                    
                     <a href="#" th:href="@{'/profile'}" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Profile</a>
                     <a href="#" th:href="@{'/event/rsvp/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-success btn-lg"><i class="fa fa-list-alt"></i> RSVP's</a>
                     <a href="#" th:href="@{'/profile/edit/'+${event.id}}" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)}" class="btn btn-info btn-lg"><i class="fa fa-edit"></i> Edit</a>
