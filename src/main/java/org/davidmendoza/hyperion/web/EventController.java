@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -53,10 +54,11 @@ import org.davidmendoza.hyperion.service.PartyService;
 import org.davidmendoza.hyperion.service.UserService;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,8 +76,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/event")
 public class EventController extends BaseController {
-    //@Autowired
-    //private Facebook facebook;
     
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     @Autowired
@@ -88,6 +88,16 @@ public class EventController extends BaseController {
     private JavaMailSender mailSender;
     @Autowired
     private PartyService partyService;
+    
+//    private final Facebook facebook;
+    @Inject
+    private ConnectionRepository connectionRepository;
+    
+//    @Inject
+//    public EventController(Facebook facebook) {
+//            this.facebook = facebook;
+//    }
+    
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreate(Model model) {
@@ -406,17 +416,32 @@ public class EventController extends BaseController {
         return "event/list";
     }
     
-    @RequestMapping("/shareMyEventOnFB")
-    public void shareEventOnFB(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal, HttpServletResponse response) {
+    @RequestMapping("/shareMyEventOnFB/{eventId}")
+    public String shareEventOnFB(@PathVariable String eventId, RedirectAttributes redirectAttributes, Principal principal, HttpServletResponse response) {
         log.debug("/event/shareEventOnFB");
         if (principal != null) {
             log.debug("Looking for social connection for {}", principal.getName());
-            Connection connection = userService.getConnection(principal.getName());
-            if (connection != null) {
-                
-                //facebook.feedOperations().post(eventId, eventId);
+            Connection conn = userService.getConnection(principal.getName());
+            log.debug("Connection was found {}", conn);
+            if (conn != null) {
+                org.springframework.social.connect.Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
+                log.debug("Connection FB {}", connection);
+                Event event = eventService.get(eventId);
+                FacebookProfile profile = connection.getApi().userOperations().getUserProfile();
+                log.debug("FB Profile {}", profile);
+                log.debug("FB Profile {}", profile.getEmail());
+                log.debug("FB Profile {}", profile.getFirstName());
+                log.debug("FB Profile {}", profile.getRelationshipStatus());
+                connection.getApi().commentOperations().addComment("719978398092913", "testing");
+                //org.springframework.social.facebook.api.Event ev = new org.springframework.social.facebook.api.Event
+                //connection.getApi().eventOperations().createEvent(event.getName(), sdf.format(event.getDate()), sdf.format(event.getDate()));
+//                log.debug("Valor devuelto por FB.post {}", fbEvent);
+            }
+            else{
+                log.debug("No connection was found!");
             }
         }
+        return "redirect:/show/" + eventId;
     }
 
 }

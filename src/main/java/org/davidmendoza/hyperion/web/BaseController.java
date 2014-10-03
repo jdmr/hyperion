@@ -23,6 +23,8 @@
  */
 package org.davidmendoza.hyperion.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -39,6 +41,7 @@ import org.springframework.ui.Model;
 public abstract class BaseController {
 
     protected final transient Logger log = LoggerFactory.getLogger(getClass());
+    protected SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     protected void paginate(Map<String, Object> params, Model model, Long page) {
         if (page != null) {
