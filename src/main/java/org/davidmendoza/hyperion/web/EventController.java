@@ -76,7 +76,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/event")
 public class EventController extends BaseController {
-    
+
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     @Autowired
     private EventService eventService;
@@ -89,14 +89,8 @@ public class EventController extends BaseController {
     @Autowired
     private PartyService partyService;
     
-//    private final Facebook facebook;
     @Inject
     private ConnectionRepository connectionRepository;
-    
-//    @Inject
-//    public EventController(Facebook facebook) {
-//            this.facebook = facebook;
-//    }
     
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
