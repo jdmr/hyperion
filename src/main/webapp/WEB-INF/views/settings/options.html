@@ -24,8 +24,8 @@ THE SOFTWARE.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include='/layouts/main :: head(Home)'>
-        <title th:text="#{login.title}">Login</title>
+    <head th:include="/layouts/main :: head('RSVP')">
+        <title>Login</title>
 
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
@@ -39,39 +39,35 @@ THE SOFTWARE.
         <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('home')">
         </header>
 
-        <div class="container">
-            <div class="row content-main">
-                <div class="col-sm-offset-4 col-sm-4">
-                    <form action="#" th:action="@{/code}" method="post" autocomplete="off" name="codeForm">
-                        <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" style="padding-top:70px;" />
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="code" id="code" placeholder="Type your iRSVPed Code" style="text-align: center;" autofocus="autofocus" value="" th:value="${code}"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">RSVP</button>
-                            </span>
-                        </div>
-                    </form>
-                        
-                    <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
-                        <div class="col-sm-12">
-                            <div class="alert alert-danger">
-                                <h4>Error</h4>
-                                <p th:text="#{${errorMessage}(${errorMessageAttrs})}">Error Message</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" th:unless="${#strings.isEmpty(successMessage)}" style="padding-top: 20px;">
-                        <div class="col-sm-12">
-                            <div class="alert alert-success">
-                                <h4>Success</h4>
-                                <p th:text="#{${successMessage}(${successMessageAttrs})}">Success Message</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="height: 130px;"></div>
-
+        <div class="container marketing">
+            <div class="row content">
+                <div class="col-sm-3">
+                    <h2>Link your account</h2>
+                    <p>Link your account with your Facebook and/or Twitter account!</p>
+                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/socialize}">Do it!</a></p>
+                </div>
+       
+                <div class="col-sm-3">
+                    <h2>Unlink your account</h2>
+                    <p>Unlink your account from your Facebook and/or Twitter account!</p>
+                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/disocialize}">Do it!</a></p>
+                </div>
+           
+                <div class="col-sm-3">
+                    <h2>Update your email address</h2>
+                    <p>It's very important to be in touch with you!</p>
+                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/updateEmail}">Now!</a></p>
+                </div>
+       
+                <div class="col-sm-3">
+                    <h2>Update your password</h2>
+                    <p>Keep your account safe!</p>
+                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/updatePassword}">Now!</a></p>
+                </div>
+            </div>
+            <div class="row content">
+                <div class="col-sm-12">
+                    <p><a class="btn btn-danger btn-block" role="button" th:href="@{/settings/deleteAccount}">Delete your acount permanently!</a></p>
                 </div>
             </div>
         </div>

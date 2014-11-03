@@ -220,4 +220,31 @@ body {
             font-weight: 550;
       }
    }
+   .content-main {
+        background-color:rgba(0,0,0,0.7);
+        padding: 2px;
+   }
+   .btn-file {
+        position: relative;
+        overflow: hidden;
+   }
+   .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+   }
+   .marketing .col-lg-4 p {
+    margin-left: 10px;
+    margin-right: 10px;
+   }
 }

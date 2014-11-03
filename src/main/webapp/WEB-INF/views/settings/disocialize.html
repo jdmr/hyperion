@@ -24,8 +24,8 @@ THE SOFTWARE.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include='/layouts/main :: head(Home)'>
-        <title th:text="#{login.title}">Login</title>
+    <head th:include="/layouts/main :: head('RSVP')">
+        <title>Login</title>
 
         <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
@@ -40,38 +40,12 @@ THE SOFTWARE.
         </header>
 
         <div class="container">
-            <div class="row content-main">
+            <div class="row content">
                 <div class="col-sm-offset-4 col-sm-4">
-                    <form action="#" th:action="@{/code}" method="post" autocomplete="off" name="codeForm">
-                        <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" style="padding-top:70px;" />
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="code" id="code" placeholder="Type your iRSVPed Code" style="text-align: center;" autofocus="autofocus" value="" th:value="${code}"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">RSVP</button>
-                            </span>
-                        </div>
-                    </form>
-                        
-                    <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
-                        <div class="col-sm-12">
-                            <div class="alert alert-danger">
-                                <h4>Error</h4>
-                                <p th:text="#{${errorMessage}(${errorMessageAttrs})}">Error Message</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" th:unless="${#strings.isEmpty(successMessage)}" style="padding-top: 20px;">
-                        <div class="col-sm-12">
-                            <div class="alert alert-success">
-                                <h4>Success</h4>
-                                <p th:text="#{${successMessage}(${successMessageAttrs})}">Success Message</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="height: 130px;"></div>
-
+                    <img src="../../../resources/img/logo.png" th:src="@{/resources/img/logo.png}" alt="iRSVPed.com" class="img-responsive" />
+                    <h3 class="text-center">Please, select Facebook / Twitter option to unlink your account.</h3>
+                    <a href="#" th:href="@{/auth/facebook}" class="btn btn-facebook btn-lg btn-block"><i class="fa fa-facebook-square"></i> <th:block th:text="#{facebook.sign.in}">Unlink your Facebook account</th:block></a>
+                    <a href="#" th:href="@{/auth/twitter}"  class="btn btn-twitter  btn-lg btn-block"><i class="fa fa-twitter-square" ></i> <th:block th:text="#{twitter.sign.in}" >Unlink your Twitter account</th:block></a>
                 </div>
             </div>
         </div>
