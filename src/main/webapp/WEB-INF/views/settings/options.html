@@ -42,36 +42,124 @@ THE SOFTWARE.
         <div class="container marketing">
             <div class="row content">
                 <div class="col-sm-3">
-                    <h2>Link your account</h2>
-                    <p>Link your account with your Facebook and/or Twitter account!</p>
-                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/socialize}">Do it!</a></p>
+                    <div class="action-nav-button">
+                    <h3>Link your account</h3>
+                    <p>
+                        <a class="btn btn-lg btn-social-fb" ><span class="fa fa-chain"></span> <span class="fa fa-facebook-square fa-2x"></span></a> 
+                    and/or
+                        <a class="btn btn-lg btn-social-tw" ><span class="fa fa-chain"></span> <span class="fa fa-twitter-square fa-2x"></span></a> 
+                    </p>
+                    </div>
                 </div>
        
                 <div class="col-sm-3">
-                    <h2>Unlink your account</h2>
-                    <p>Unlink your account from your Facebook and/or Twitter account!</p>
-                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/disocialize}">Do it!</a></p>
+                    <div class="action-nav-button">
+                    <h3>Unlink your account</h3>
+                    <p>
+                        <a class="btn btn-lg btn-social-fb" ><span class="fa fa-chain-broken"></span> <span class="fa fa-facebook-square fa-2x"></span></a> 
+                    and/or
+                        <a class="btn btn-lg btn-social-tw" ><span class="fa fa-chain-broken"></span> <span class="fa fa-twitter-square fa-2x"></span></a> 
+                    </p>
+                    </div>
                 </div>
            
-                <div class="col-sm-3">
-                    <h2>Update your email address</h2>
-                    <p>It's very important to be in touch with you!</p>
-                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/updateEmail}">Now!</a></p>
+                <div class="col-sm-3 action-nav-button">
+                    <h3>Email Address</h3>
+                    
+                    <p><a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#updateEmail"><span class="fa fa-envelope-o fa-2x"></span> Update now!</a></p>
                 </div>
        
-                <div class="col-sm-3">
-                    <h2>Update your password</h2>
-                    <p>Keep your account safe!</p>
-                    <p><a class="btn btn-primary" role="button" th:href="@{/settings/updatePassword}">Now!</a></p>
+                <div class="col-sm-3 action-nav-button">
+                    <h3>Password</h3>
+                    <p><a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#updatePassword"><span class="fa fa-key fa-2x"></span> Change it now!</a></p>
                 </div>
             </div>
             <div class="row content">
                 <div class="col-sm-12">
-                    <p><a class="btn btn-danger btn-block" role="button" th:href="@{/settings/deleteAccount}">Delete your acount permanently!</a></p>
+                    <p><a class="btn btn-danger btn-block btn-lg" role="button" data-toggle="modal" data-target="#updatePassword"><i class="fa fa-ban fa-2x"></i> Delete your acount permanently!</a></p>
                 </div>
             </div>
         </div>
+        
+<!-- Email update modal -->        
+<div class="modal fade" id="updateEmail" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+            <h4 class="modal-title text-info" id="myModalLabel">Update your email address</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group margin-bottom-sm">
+                    <span class="label label-primary">Email address </span>
+                    <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                    <input class="form-control" type="text" placeholder="New Email Address" id="email" name="email"/>
+                </div>
+                <br/>
+                <div class="input-group margin-bottom-sm">
+                    <span class="label label-primary">Retype email&nbsp;&nbsp;&nbsp;</span>
+                    <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                    <input class="form-control" type="text" placeholder="Confirm Email address" id="confirmedEmail" name="confirmedEmail"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p><a class="btn btn-primary" role="button" th:href="@{/settings/updateEmail}">Update now!</a></p>
+        </div>
+    </div>
+  </div>
+</div>
 
+<!-- Password update modal -->        
+<div class="modal fade" id="updatePassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+            <h4 class="modal-title text-info" id="myModalLabel">Update your password</h4>
+            </div>
+            <form action="#" th:action="@{/settings/updatePassword}" th:object="${SettingsController}" method="post" id="settingsForm">
+            <div class="modal-body">
+                <div class="input-group margin-bottom-sm">
+                    <span class="label label-primary">Type password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                    <input class="form-control" type="text" placeholder="New password" id="password" name="password"/>
+                </div>
+                <br/>
+                <div class="input-group margin-bottom-sm">
+                    <span class="label label-primary">Retype password</span>
+                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                    <input class="form-control" type="text" placeholder="Confirm password" id="confirmedPassword" name="confirmedPassword"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p><input type="submit" class="btn btn-primary" role="button" value="Update"/></p>
+            </div>
+            </form>    
+        </div>
+  </div>
+</div>
+
+<!-- Delete account -->        
+<div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+            <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group margin-bottom-sm">
+                    <span class="input-group-addon"><i class="fa fa-trash-o fa-lg"></i></span>
+                    <span class="label label-danger">Are you sure you want to say goodbye?</span>
+                </div>
+                <br/>
+            </div>
+            <div class="modal-footer">
+                <p><a class="btn btn-primary" role="button" th:href="@{/settings/updatePassword}">Delete now!</a></p>
+        </div>
+    </div>
+  </div>
+</div>
         <footer role="contentinfo" th:replace="/layouts/main :: footer">
         </footer>
 
