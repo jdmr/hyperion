@@ -151,23 +151,48 @@ public class SettingsController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
-    public String changePasswd(@PathVariable String eventId, @ModelAttribute("event") Event event, RedirectAttributes redirectAttributes, Model model, Principal principal) {
-        log.debug("/event/created");
-        if (event == null || !StringUtils.isNotBlank(event.getName())) {
-            //event = eventService.get(eventId);
-            model.addAttribute("event", event);
-        }
-
-        if (principal != null) {
-            User user = userService.get(principal.getName());
-            if (user.getId().equals(event.getUser().getId())) {
-                model.addAttribute("owner", Boolean.TRUE);
+    @RequestMapping(value = "/changePassword")
+    public String changePasswd(HttpServletRequest request, String password, String confirmedPassword, RedirectAttributes redirectAttributes, Model model) {
+        log.debug("/settings/changePasswd");
+        
+        log.debug("Password {}", password);
+        log.debug("Confirmed Password {}", confirmedPassword);
+        
+        try {
+            if(password == null || password.isEmpty()){
+                log.error("El password esta vacio");
+                model.addAttribute("errorMessage", "password.is.empty");
+                return "settings/options";
+            }
+            if(confirmedPassword == null || confirmedPassword.isEmpty()){
+                log.error("El password confirmado esta vacio");
+                model.addAttribute("errorMessage", "confirmedPassword.is.empty");
+                return "settings/options";
             }
             
+            if(!password.equals(confirmedPassword)){
+                log.error("El password y el password confirmado no son iguales");
+                model.addAttribute("errorMessage", "password.not.equals.confirmedPassword");
+                return "settings/options";
+            }
+            
+            User user = (User) request.getSession().getAttribute(Constants.LOGGED_USER);
+            user = userService.get(user.getId());
+            
+            userService.changePassword(user, password);
+            request.getSession().setAttribute(Constants.LOGGED_USER, user);
+            
+            redirectAttributes.addFlashAttribute("email", password);
+            redirectAttributes.addFlashAttribute("successMessage", "email.updated");
+            redirectAttributes.addFlashAttribute("successMessageAttrs", password);
+        } catch (Exception e) {
+            log.error("Error al intentar modificar el password del usuario {}", e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("errorMessage", e.getMessage());
+            return "settings/options";
         }
 
-        return "event/created";
+        return "settings/options";
     }
     
     @RequestMapping(value = "/updateEmail")
@@ -178,7 +203,7 @@ public class SettingsController extends BaseController {
         log.debug("confirmedEmail {}", confirmedEmail);
         
         if(!email.equals(confirmedEmail)){
-            log.error("El correo {} no es igual al correo {}", email, confirmedEmail);
+            log.error("El correo {} no es igual al correo confirmado {}", email, confirmedEmail);
             model.addAttribute("errorMessage", "email.not.equals");
             return "settings/options";
         }
@@ -201,36 +226,31 @@ public class SettingsController extends BaseController {
             user.setUsername(email);
             
             userService.update(user);
+            request.getSession().setAttribute(Constants.LOGGED_USER, user);
+            
+            redirectAttributes.addFlashAttribute("email", email);
+            redirectAttributes.addFlashAttribute("successMessage", "email.updated");
+            redirectAttributes.addFlashAttribute("successMessageAttrs", email);
         } catch (Exception e) {
             log.error("Error al intentar modificar el correo del usuario {}", e.getMessage());
             e.printStackTrace();
             model.addAttribute("errorMessage", e.getMessage());
             return "settings/options";
         }
-        
-        redirectAttributes.addFlashAttribute("email", email);
-        redirectAttributes.addFlashAttribute("successMessage", "email.updated");
-        redirectAttributes.addFlashAttribute("successMessageAttrs", email);
 
         return "settings/options";
     }
 
-    @RequestMapping(value = "deleteAccount", method = RequestMethod.GET)
-    public String deleteAccount(@PathVariable String eventId, @ModelAttribute("event") Event event, RedirectAttributes redirectAttributes, Model model, Principal principal) {
-        log.debug("/event/show");
-        if (event == null || !StringUtils.isNotBlank(event.getName())) {
-            model.addAttribute("event", event);
-        }
+    @RequestMapping(value = "deleteAccount")
+    public String deleteAccount(HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
+        log.debug("/settings/deleteAccount");
+        
+        User user = (User) request.getSession().getAttribute(Constants.LOGGED_USER);
+        userService.delete(user.getId());
+        
+        request.getSession().invalidate();
 
-        if (principal != null) {
-            User user = userService.get(principal.getName());
-            if (user.getId().equals(event.getUser().getId())) {
-                model.addAttribute("owner", Boolean.TRUE);
-            }
-            
-        }
-
-        return "event/show";
+        return "settings/options";
     }
 
 }

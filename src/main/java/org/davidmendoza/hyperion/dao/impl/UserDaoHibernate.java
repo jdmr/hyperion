@@ -73,6 +73,15 @@ public class UserDaoHibernate extends BaseDao implements UserDao {
         currentSession().update(user);
         return user;
     }
+    
+    @Override
+    public User changePassword(User user, String password){
+        if (StringUtils.isNotBlank(password)) {
+            user.setPassword(passwordEncoder.encode(password));
+            user.setPasswordVerification(user.getPassword());
+        }
+        return user;
+    }
 
     @Override
     public User create(User user) {
@@ -146,9 +155,14 @@ public class UserDaoHibernate extends BaseDao implements UserDao {
 
     @Override
     public void delete(User user) {
-        Query query = currentSession().createQuery("delete from Event e where e.user.id = :userId");
+        Query query = currentSession().createQuery("delete from Party p where p.event.id in (select e.id from Event e where e.user.id = :userId)");
         query.setLong("userId", user.getId());
         query.executeUpdate();
+        
+        query = currentSession().createQuery("delete from Event e where e.user.id = :userId");
+        query.setLong("userId", user.getId());
+        query.executeUpdate();
+        
         currentSession().delete(user);
     }
 

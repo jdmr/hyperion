@@ -58,6 +58,12 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
+    public User changePassword(User user, String password) {
+        user = userDao.changePassword(user, password);
+        return userDao.update(user);
+    }
+    
+    @Override
     public User update(User user) {
         return userDao.update(user);
     }

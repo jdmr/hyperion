@@ -39,6 +39,8 @@ public interface UserDao {
     public User get(String username);
 
     public User getByOpenId(String openId);
+    
+    public User changePassword(User user, String password);
 
     public User update(User user);
 

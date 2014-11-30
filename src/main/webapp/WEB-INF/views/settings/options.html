@@ -85,7 +85,7 @@ THE SOFTWARE.
             </div>
             <div class="row content">
                 <div class="col-sm-12">
-                    <p><a class="btn btn-danger btn-block btn-lg" role="button" data-toggle="modal" data-target="#updatePassword"><i class="fa fa-ban fa-2x"></i> Delete your acount permanently!</a></p>
+                    <p><a class="btn btn-danger btn-block btn-lg" role="button" data-toggle="modal" data-target="#deleteAccount"><i class="fa fa-ban fa-2x"></i> Delete your acount permanently!</a></p>
                 </div>
             </div>
         </div>
@@ -120,7 +120,8 @@ THE SOFTWARE.
 </div>
 </form>
 
-<!-- Password update modal -->        
+<!-- Password update modal -->     
+<form action="#" th:action="@{/settings/changePassword}" method="post" id="settingsForm" enctype="multipart/form-data">
 <div class="modal fade" id="updatePassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -133,24 +134,26 @@ THE SOFTWARE.
                 <div class="input-group margin-bottom-sm">
                     <span class="label label-primary">Type password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                    <input class="form-control" type="text" placeholder="New password" id="password" name="password"/>
+                    <input class="form-control" type="password" placeholder="New password" id="password" name="password"/>
                 </div>
                 <br/>
                 <div class="input-group margin-bottom-sm">
                     <span class="label label-primary">Retype password</span>
                     <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                    <input class="form-control" type="text" placeholder="Confirm password" id="confirmedPassword" name="confirmedPassword"/>
+                    <input class="form-control" type="password" placeholder="Confirm password" id="confirmedPassword" name="confirmedPassword"/>
                 </div>
             </div>
             <div class="modal-footer">
-                <p><input type="submit" class="btn btn-primary" role="button" value="Update"/></p>
+                <p><button type="submit" class="btn btn-primary" name="update" id="updateBtn"><i class="fa fa-edit"></i> Update Now!</button></p>
             </div>
             </form>    
         </div>
   </div>
 </div>
+</form>
 
 <!-- Delete account -->        
+<form action="#" th:action="@{/settings/deleteAccount}" method="post" id="settingsForm" enctype="multipart/form-data">
 <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -166,11 +169,12 @@ THE SOFTWARE.
                 <br/>
             </div>
             <div class="modal-footer">
-                <p><a class="btn btn-primary" role="button" th:href="@{/settings/updatePassword}">Delete now!</a></p>
-        </div>
+                <p><button type="submit" class="btn btn-primary" name="update" id="updateBtn"><i class="fa fa-edit"></i> Delete Account!</button></p>
+            </div>
     </div>
   </div>
 </div>
+</form>
         <footer role="contentinfo" th:replace="/layouts/main :: footer">
         </footer>
 
