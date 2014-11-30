@@ -38,6 +38,15 @@ THE SOFTWARE.
 
         <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('home')">
         </header>
+        
+        <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
+            <div class="col-sm-12">
+                <div class="alert alert-danger">
+                    <h4>Error</h4>
+                    <p th:text="#{${errorMessage}(${errorMessageAttr})}">Error Message</p>
+                </div>
+            </div>
+        </div>
 
         <div class="container marketing">
             <div class="row content">
@@ -81,7 +90,8 @@ THE SOFTWARE.
             </div>
         </div>
         
-<!-- Email update modal -->        
+<!-- Email update modal -->
+<form action="#" th:action="@{/settings/updateEmail}" method="post" id="settingsForm" enctype="multipart/form-data">
 <div class="modal fade" id="updateEmail" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -103,11 +113,12 @@ THE SOFTWARE.
                 </div>
             </div>
             <div class="modal-footer">
-                <p><a class="btn btn-primary" role="button" th:href="@{/settings/updateEmail}">Update now!</a></p>
+                <p><button type="submit" class="btn btn-primary" name="update" id="updateBtn"><i class="fa fa-edit"></i> Update Now!</button></p>
         </div>
     </div>
   </div>
 </div>
+</form>
 
 <!-- Password update modal -->        
 <div class="modal fade" id="updatePassword" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">

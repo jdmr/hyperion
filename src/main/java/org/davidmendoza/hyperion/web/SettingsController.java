@@ -39,6 +39,7 @@ import org.davidmendoza.hyperion.service.MessageService;
 import org.davidmendoza.hyperion.service.UserService;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.social.connect.ConnectionRepository;
@@ -50,6 +51,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.rmi.transport.proxy.HttpReceiveSocket;
 
 /**
  *
@@ -74,6 +76,7 @@ public class SettingsController extends BaseController {
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public String options(Model model) {
         log.debug("/settings/options");
+        
         return "settings/options";
     }
     
@@ -165,6 +168,51 @@ public class SettingsController extends BaseController {
         }
 
         return "event/created";
+    }
+    
+    @RequestMapping(value = "/updateEmail")
+    public String updateEmail(HttpServletRequest request, String email, String confirmedEmail, RedirectAttributes redirectAttributes, Model model) {
+        log.debug("/settings/updateEmail");
+        
+        log.debug("email {}", email);
+        log.debug("confirmedEmail {}", confirmedEmail);
+        
+        if(!email.equals(confirmedEmail)){
+            log.error("El correo {} no es igual al correo {}", email, confirmedEmail);
+            model.addAttribute("errorMessage", "email.not.equals");
+            return "settings/options";
+        }
+        
+        try {
+            User user = (User) request.getSession().getAttribute(Constants.LOGGED_USER);
+            user = userService.get(user.getId());
+            
+            //Validar que el correo no este duplicado
+            User user2 = userService.get(email);
+            if(user2 != null){
+                log.error("El correo {} ya existe! Por favor, verifiquelo", email);
+                model.addAttribute("errorMessage", "email.exists");
+                return "settings/options";
+            }
+            
+            //Para evitar error
+            user.setPasswordVerification(user.getPassword());
+            //Se asigna nuevo correo
+            user.setUsername(email);
+            
+            userService.update(user);
+        } catch (Exception e) {
+            log.error("Error al intentar modificar el correo del usuario {}", e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("errorMessage", e.getMessage());
+            return "settings/options";
+        }
+        
+        redirectAttributes.addFlashAttribute("email", email);
+        redirectAttributes.addFlashAttribute("successMessage", "email.updated");
+        redirectAttributes.addFlashAttribute("successMessageAttrs", email);
+
+        return "settings/options";
     }
 
     @RequestMapping(value = "deleteAccount", method = RequestMethod.GET)
