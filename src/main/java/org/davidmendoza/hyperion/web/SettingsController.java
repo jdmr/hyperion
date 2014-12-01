@@ -182,9 +182,9 @@ public class SettingsController extends BaseController {
             userService.changePassword(user, password);
             request.getSession().setAttribute(Constants.LOGGED_USER, user);
             
-            redirectAttributes.addFlashAttribute("email", password);
-            redirectAttributes.addFlashAttribute("successMessage", "email.updated");
-            redirectAttributes.addFlashAttribute("successMessageAttrs", password);
+            model.addAttribute("email", password);
+            model.addAttribute("successMessage", "email.updated");
+            model.addAttribute("successMessageAttrs", password);
         } catch (Exception e) {
             log.error("Error al intentar modificar el password del usuario {}", e.getMessage());
             e.printStackTrace();
@@ -210,6 +210,8 @@ public class SettingsController extends BaseController {
         
         try {
             User user = (User) request.getSession().getAttribute(Constants.LOGGED_USER);
+            log.debug("User {}", user);
+            
             user = userService.get(user.getId());
             
             //Validar que el correo no este duplicado
@@ -228,9 +230,9 @@ public class SettingsController extends BaseController {
             userService.update(user);
             request.getSession().setAttribute(Constants.LOGGED_USER, user);
             
-            redirectAttributes.addFlashAttribute("email", email);
-            redirectAttributes.addFlashAttribute("successMessage", "email.updated");
-            redirectAttributes.addFlashAttribute("successMessageAttrs", email);
+            model.addAttribute("email", email);
+            model.addAttribute("successMessage", "email.updated");
+            model.addAttribute("successMessageAttrs", email);
         } catch (Exception e) {
             log.error("Error al intentar modificar el correo del usuario {}", e.getMessage());
             e.printStackTrace();
@@ -249,6 +251,8 @@ public class SettingsController extends BaseController {
         userService.delete(user.getId());
         
         request.getSession().invalidate();
+        
+        model.addAttribute("successMessage", "account.deleted");
 
         return "settings/options";
     }

@@ -39,11 +39,21 @@ THE SOFTWARE.
         <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="/layouts/main :: navigation('home')">
         </header>
         
-        <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
+        <div class="row" th:unless="${#strings.isEmpty(errorMessage)}" role="alert">
             <div class="col-sm-12">
                 <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4>Error</h4>
                     <p th:text="#{${errorMessage}(${errorMessageAttr})}">Error Message</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:unless="${#strings.isEmpty(successMessage)}" role="alert">
+            <div class="col-sm-12">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4>Success</h4>
+                    <p th:text="#{${successMessage}(${successMessageAttr})}">Success Message</p>
                 </div>
             </div>
         </div>
