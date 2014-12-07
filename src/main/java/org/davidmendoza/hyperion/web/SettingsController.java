@@ -26,12 +26,13 @@ package org.davidmendoza.hyperion.web;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.apache.commons.lang.StringUtils;
 import org.davidmendoza.hyperion.model.Event;
 import org.davidmendoza.hyperion.model.Message;
 import org.davidmendoza.hyperion.model.User;
@@ -39,19 +40,15 @@ import org.davidmendoza.hyperion.service.MessageService;
 import org.davidmendoza.hyperion.service.UserService;
 import org.davidmendoza.hyperion.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.rmi.transport.proxy.HttpReceiveSocket;
 
 /**
  *
@@ -254,7 +251,28 @@ public class SettingsController extends BaseController {
         
         model.addAttribute("successMessage", "account.deleted");
 
-        return "settings/options";
+        return "redirect:/event/create";
+    }
+    
+    @RequestMapping(value = "feedbackForm")
+    public String feedbackForm(HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) throws Exception {
+        log.debug("/settings/feedbackForm");
+        
+        User user = (User) request.getSession().getAttribute(Constants.LOGGED_USER);
+        userService.delete(user.getId());
+        
+        fillFeedbackOptions(request);
+
+        return "redirect:/event/create";
+    }
+    
+    protected void fillFeedbackOptions(HttpServletRequest request) throws Exception {
+	Map<String,String> options = new LinkedHashMap<String,String>();
+	options.put("1", "I have a trouble");
+	options.put("2", "I found a bug");
+	options.put("3", "I have a suggestion");
+	options.put("4", "I just want to say 'hello'");
+	request.setAttribute("optionsList", options);
     }
 
 }

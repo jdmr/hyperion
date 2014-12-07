@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 @import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Allura&subset=latin,latin-ext);
+@import url(http://fonts.googleapis.com/css?family=IM+Fell+English+SC&subset=latin,latin-ext);
+@import url(http://fonts.googleapis.com/css?family=Life+Savers:400,700&subset=latin,latin-ext);
 
 body {
     padding-top: 60px;
@@ -280,5 +283,58 @@ body {
     
     .black-color {
         color: #fff;
+    }
+    
+    .confirmed-center {
+        text-align: center;
+    }
+    .confirmed-title-1 {
+        font-family: 'Allura', cursive;
+        font-size: 70px;
+        line-height: 10%;
+    }
+    .confirmed-title-2 {
+        font-family: 'IM Fell English SC', serif, underline;
+        font-size: 59px;
+        line-height: 10%;
+    }
+    .confirmed-date {
+        font-family: 'IM Fell English SC', serif;
+        font-size: 39px;
+        line-height: 10%;
+        text-align: center;
+    }
+    .confirmed-event {
+        font-family: 'IM Fell English SC', serif;
+        font-size: 100px;
+        line-height: 120%;
+        text-align: center;
+    }
+    .confirmed-rsvp {
+        font-family: 'IM Fell English SC', serif, underline;
+        font-size: 60px;
+        line-height: 10%;
+        text-align: center;
+    }
+    .confirmed-code {
+        font-family: 'Life Savers', cursive;
+        font-size: 40px;
+        line-height: 120%;
+        text-align: center;
+        padding-top: 50px;
+    }
+    .confirmed-host {
+        font-family: 'IM Fell English SC', serif, underline;
+        font-size: 25px;
+        line-height: 40%;
+        text-align: center;
+        padding-top: 10px;
+    }
+    .confirmed-description {
+        font-family: 'IM Fell English SC', serif, underline;
+        font-size: 25px;
+        line-height: 40%;
+        text-align: center;
+        padding-top: 10px;
     }
 }

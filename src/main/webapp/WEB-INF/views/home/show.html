@@ -32,9 +32,9 @@ THE SOFTWARE.
         <link rel="stylesheet" href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css" th:href="@{/resources/css/font-awesome.min.css}" />
         <link rel="stylesheet" href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" />
-
+        
     </head>
-    <body>
+    <body> 
 
         <header class="navbar navbar-fixed-top" role="banner" th:substituteby="/layouts/main :: navigation('profile')">
         </header>
@@ -42,13 +42,17 @@ THE SOFTWARE.
         <div class="container">
             <div class="row content">
                 <div class="col-sm-12">
-                    <h1><span class="label label-info"> <th:block th:text="${event.name}">Event Name</th:block></span></h1><br/>
-                    <h4>Date:&nbsp;<th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></h4>
-                    <h4>Host:&nbsp;<th:block th:text="${event.hostName}">David Mendoza</th:block></h4>
-                    <h4>Email:&nbsp;<th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></h4>
-                    <h4>Phone:&nbsp;<th:block th:text="${event.hostPhone}">999 999 9999</th:block></h4>
-                    <h4>Code:&nbsp;<th:block th:text="${event.code}">TEST</th:block></h4>
-                    <h4><th:block th:utext="${event.description}">Event description</th:block></h4>
+                    <h2 class="confirmed-center"><span class="confirmed-title-1"> Save </span>
+                    <span class="confirmed-title-2"> THE </span>
+                    <span class="confirmed-title-1"> Date </span></h2>
+                    <h4 class="confirmed-date"> <th:block th:text="${#dates.format(event.date, 'MM.dd.yy')}">Sun, May 1 2014 12:00 am CST</th:block></h4>
+                    <h1 class="confirmed-event"> <th:block th:text="${event.name}">Event Name</th:block></h1><br/>
+                    <h2 class="confirmed-rsvp"> RSVP </h2>
+                    <h4 class="confirmed-code"><th:block th:text="${event.code}">TEST</th:block></h4>
+                    <h6 class="confirmed-host">Host:&nbsp;<th:block th:text="${event.hostName}">David Mendoza</th:block> | 
+                    email:&nbsp;<th:block th:text="${event.hostEmail}">david@irsvped.com</th:block> | 
+                    Phone Number:&nbsp;<th:block th:text="${event.hostPhone}">999 999 9999</th:block></h6>
+                    <h6 class="confirmed-description">Comments: <th:block th:utext="${event.description}">Event description</th:block></h6><br/>
                     <th:block th:if="${(#authorization.expression('hasRole(''ROLE_ADMIN'')') || not #strings.isEmpty(owner)) and not #lists.isEmpty(parties)}" >
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">

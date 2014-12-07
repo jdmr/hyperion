@@ -1,0 +1,253 @@
+<!--
+The MIT License
+
+Copyright 2014 J. David Mendoza.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="/layouts/main :: head('Update Event')">
+        <title>EVENT</title>
+
+        <link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" th:href="@{/resources/css/jquery-ui.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css" th:href="@{/resources/css/font-awesome.min.css}" />
+        <link rel="stylesheet" href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-fixed-top" role="banner" th:substituteby="/layouts/main :: navigation('event')">
+        </header>
+
+        <div class="container">
+            <div class="row content">
+                <div class="col-sm-12">
+                    <form action="#" th:action="@{/event/update}" th:object="${event}" method="post" id="eventForm" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}" />
+                        <div class="row" th:if="${#fields.hasErrors('*')}">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger">
+                                    <h4 th:text="#{error.event.not.created}">Error</h4>
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Incorrect input</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger">
+                                    <h4>Error</h4>
+                                    <p th:text="#{${errorMessage}(${errorMessageAttr})}">Error Message</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('option')}?'has-error'">
+                                    <label class="control-label" for="name" th:text="#{event.name}">Name</label>
+                                    <form:select path="country" items="${countryList}" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('seats')}?'has-error'">
+                                    <label class="control-label" for="seats" th:text="#{event.seats}">Seats</label>
+                                    <input type="number" th:field="*{seats}" id="seats" class="form-control" min="0" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('description')}?'has-error'">
+                                    <label class="control-label" for="description" th:text="#{event.description}">Description</label>
+                                    <textarea th:field="*{description}" id="description" class="form-control" style="height:100px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('date')}?'has-error'">
+                                    <label class="control-label" for="startDate" th:text="#{event.date}">Date</label>
+                                    <input type="text" th:field="*{startDate}" id="startDate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('time')}?'has-error'">
+                                    <label class="control-label" for="time" th:text="#{event.time}">Time</label>
+                                    <select name="time" id="time" class="form-control" th:field="*{time}">
+                                        <option value="18:00">06:00 pm</option>
+                                        <option value="18:30">06:30 pm</option>
+                                        <option value="19:00">07:00 pm</option>
+                                        <option value="19:30">07:30 pm</option>
+                                        <option value="20:00">08:00 pm</option>
+                                        <option value="20:30">08:30 pm</option>
+                                        <option value="21:00">09:00 pm</option>
+                                        <option value="21:30">09:30 pm</option>
+                                        <option value="22:00">10:00 pm</option>
+                                        <option value="22:30">10:30 pm</option>
+                                        <option value="23:00">11:00 pm</option>
+                                        <option value="23:30">11:30 pm</option>
+                                        <option value="00:00">00:00 am</option>
+                                        <option value="00:30">00:30 am</option>
+                                        <option value="01:00">01:00 am</option>
+                                        <option value="01:30">01:30 am</option>
+                                        <option value="02:00">02:00 am</option>
+                                        <option value="02:30">02:30 am</option>
+                                        <option value="03:00">03:00 am</option>
+                                        <option value="03:30">03:30 am</option>
+                                        <option value="04:00">04:00 am</option>
+                                        <option value="04:30">04:30 am</option>
+                                        <option value="05:00">05:00 am</option>
+                                        <option value="05:30">05:30 am</option>
+                                        <option value="06:00">06:00 am</option>
+                                        <option value="06:30">06:30 am</option>
+                                        <option value="07:00">07:00 am</option>
+                                        <option value="07:30">07:30 am</option>
+                                        <option value="08:00">08:00 am</option>
+                                        <option value="08:30">08:30 am</option>
+                                        <option value="09:00">09:00 am</option>
+                                        <option value="09:30">09:30 am</option>
+                                        <option value="10:00">10:00 am</option>
+                                        <option value="10:30">10:30 am</option>
+                                        <option value="11:00">11:00 am</option>
+                                        <option value="11:30">11:30 am</option>
+                                        <option value="12:00">12:00 pm</option>
+                                        <option value="12:30">12:30 pm</option>
+                                        <option value="13:00">01:00 pm</option>
+                                        <option value="13:30">01:30 pm</option>
+                                        <option value="14:00">02:00 pm</option>
+                                        <option value="14:30">02:30 pm</option>
+                                        <option value="15:00">03:00 pm</option>
+                                        <option value="15:30">03:30 pm</option>
+                                        <option value="16:00">04:00 pm</option>
+                                        <option value="16:30">04:30 pm</option>
+                                        <option value="17:00">05:00 pm</option>
+                                        <option value="17:30">05:30 pm</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hostName')}?'has-error'">
+                                    <label class="control-label" for="hostName" th:text="#{event.hostName}">Host Name</label>
+                                    <input type="text" th:field="*{hostName}" id="hostName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hostPhone')}?'has-error'">
+                                    <label class="control-label" for="hostPhone" th:text="#{event.hostPhone}">Host Phone</label>
+                                    <input type="text" th:field="*{hostPhone}" id="hostPhone" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('hostEmail')}?'has-error'">
+                                    <label class="control-label" for="hostEmail" th:text="#{event.hostEmail}">Host Email</label>
+                                    <input type="text" th:field="*{hostEmail}" id="hostEmail" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('street')}?'has-error'">
+                                    <label class="control-label" for="street" th:text="#{event.street}">Street</label>
+                                    <input type="text" th:field="*{street}" id="street" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('city')}?'has-error'">
+                                    <label class="control-label" for="city" th:text="#{event.city}">City</label>
+                                    <input type="text" th:field="*{city}" id="city" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('state')}?'has-error'">
+                                    <label class="control-label" for="state" th:text="#{event.state}">State</label>
+                                    <input type="text" th:field="*{state}" id="state" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('zip')}?'has-error'">
+                                    <label class="control-label" for="zip" th:text="#{event.zip}">ZIP Code</label>
+                                    <input type="text" th:field="*{zip}" id="zip" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('imageFile')}?'has-error'">
+                                    <label class="control-label" for="imageFile" th:text="#{event.imageFile}">Image</label>
+                                    <input type="file" th:field="*{imageFile}" id="imageFile" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('code')}?'has-error'">
+                                    <label class="control-label" for="code" th:text="#{event.code}">Code</label>
+                                    <input type="text" th:field="*{code}" id="code" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-edit"></i> Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer role="contentinfo" th:replace="/layouts/main :: footer">
+        </footer>
+
+        <div th:replace="/layouts/main :: scripts" th:remove="tag">
+            <script src="../../../resources/js/jquery-1.10.2.min.js" th:src="@{/resources/js/jquery-1.10.2.min.js}"></script>
+            <script src="../../../resources/js/jquery-migrate-1.2.1.min.js" th:src="@{/resources/js/jquery-migrate-1.2.1.min.js}"></script>
+            <script src="../../../resources/js/jquery-ui.min.js" th:src="@{/resources/js/jquery-ui.min.js}"></script>
+            <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+            <script src="../../../resources/js/main.js" th:src="@{/resources/js/main.js}"></script>
+        </div>
+        <script>
+            $(function() {
+                
+                $('a#logoutLink').click(function(e) {
+                    e.preventDefault();
+                    $('#logoutForm').submit();
+                });
+                
+                $('#startDate').datepicker({
+                    minDate: '+0d',
+                    maxDate: '+18m'
+                });
+            });
+        </script>
+
+    </body>
+</html>
