@@ -239,3 +239,32 @@ body {
     line-height: 40%;
     text-align: center;
     padding-top: 10px; }
+  body .thumbnail {
+    background-color: #ffffff;
+    border: 7px solid black;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    /* For IE8 and earlier */ }
+    body .thumbnail .image {
+      padding-right: 3px;
+      padding-left: 3px;
+      padding-bottom: 3px;
+      padding-top: 3px;
+      opacity: 0.95;
+      filter: alpha(opacity=95);
+      /* For IE8 and earlier */ }
+    body .thumbnail .title {
+      font-family: 'Allura', cursive;
+      font-size: 40px;
+      line-height: 60%;
+      text-decoration: underline;
+      font-weight: bold; }
+    body .thumbnail .texto {
+      font-size: 18px;
+      line-height: 100%; }
+  body .col-sm-4 {
+    margin-left: 3px; }

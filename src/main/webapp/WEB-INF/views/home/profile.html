@@ -41,7 +41,6 @@ THE SOFTWARE.
 
         <div class="container">
             <div class="row content" style="padding-bottom: 50px;">
-                <div class="col-sm-12">
 
                     <div class="row" th:unless="${#strings.isEmpty(errorMessage)}">
                         <div class="col-sm-12">
@@ -61,17 +60,22 @@ THE SOFTWARE.
                         </div>
                     </div>
 
-                    <div class="row" th:each="event : ${list}">
-                        <div class="col-sm-12">
-                            <h2><a href="#" th:href="@{'/profile/'+${event.id}}" th:text="${event.name}">Event Name</a></h2>
-                            <p>Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
-                            <p>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
-                            <p>Code: <th:block th:text="${event.code}">CODE</th:block></p>
-                            <p th:utext="${event.description}">Event description</p>
+                    <div class="row col-sm-4" th:each="event : ${list}">
+                        <div class="thumbnail">
+                            <p th:unless="${not #strings.isEmpty(event.imageName)}"><i class="fa-picture-o fa-5x"></i></p>
+                            <p th:unless="${#strings.isEmpty(event.imageName)}"><img src="#" th:src="@{'/image/'+${event.id}}" th:alt="${event.imageName}" alt="imageName" class='image img-responsive'/></p>
+                            <div class="caption">
+                                <h4 class="title"><th:block th:text="${event.name}" >Event Name</th:block></h4>
+                                <p class="texto">Date: <th:block th:text="${#dates.format(event.date, 'EEE, MMM dd yyyy hh:mm a zzz')}">Sun, May 1 2014 12:00 am CST</th:block></p>
+                                <p class="texto">Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></p>
+                                <p class="texto">Code: <th:block th:text="${event.code}">CODE</th:block></p>
+                                <p>
+                                    <a href="#" class="btn btn-primary" role="button" th:href="@{'/profile/'+${event.id}}">View</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <ul class="pagination" th:unless="${#arrays.isEmpty(list)}">
+                    <ul class="row pagination col-sm-12" th:unless="${#arrays.isEmpty(list)}">
                         <li class="disabled"><a href="#" th:text="#{pagination.message(${pagination[0]},${pagination[1]},${pagination[2]})}">Pages</a></li>
                         <!--/*/ <th-block th:each="pageId : ${pages}"> /*/-->
                         <li th:class="${page == pageId}?'active'">
@@ -79,7 +83,6 @@ THE SOFTWARE.
                         </li>
                         <!--/*/ </th-block> /*/-->
                     </ul>
-                </div>
             </div>
         </div>
 
