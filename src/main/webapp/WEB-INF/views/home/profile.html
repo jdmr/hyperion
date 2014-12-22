@@ -60,6 +60,7 @@ THE SOFTWARE.
                         </div>
                     </div>
 
+                    <div class="rsvp-profile">
                     <div class="row col-sm-4" th:each="event : ${list}">
                         <div class="thumbnail">
                             <p th:unless="${not #strings.isEmpty(event.imageName)}"><i class="fa-picture-o fa-5x"></i></p>
@@ -74,6 +75,7 @@ THE SOFTWARE.
                                 </p>
                             </div>
                         </div>
+                    </div>
                     </div>
                     <ul class="row pagination col-sm-12" th:unless="${#arrays.isEmpty(list)}">
                         <li class="disabled"><a href="#" th:text="#{pagination.message(${pagination[0]},${pagination[1]},${pagination[2]})}">Pages</a></li>

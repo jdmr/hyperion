@@ -105,10 +105,12 @@ public class CodeController extends BaseController {
     }
 
     @RequestMapping(value = "/thankyou", method = RequestMethod.GET)
-    public String thankyou(@ModelAttribute("party") Party party) {
+    public String thankyou(@ModelAttribute("party") Party party, Model modelo) {
         if (party != null && StringUtils.isNotBlank(party.getEmail())) {
             try {
                 Event event = eventService.get(party.getEvent().getId());
+                modelo.addAttribute("event", event);
+                
                 Message code = messageService.get(Constants.CODE);
                 MimeMessage message = mailSender.createMimeMessage();
                 InternetAddress[] addresses = {new InternetAddress("iRSVPed <myrsvplease2@gmail.com>")};
