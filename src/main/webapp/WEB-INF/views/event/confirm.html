@@ -82,17 +82,20 @@ THE SOFTWARE.
                         <input type="hidden" th:field="*{code}" id="code" />
                     </div>
                     <div class="col-sm-12">
-                        <h1><span class="confirmed-title"> <th:block th:text="${event.name}">Event Name</th:block></span></h1><br/>
-                        <h4><span class="confirmed-date"> Date: <th:block th:text="${#dates.format(event.date, 'MM.dd.yy')}">Sun, May 1 2014 12:00 am CST</th:block></span></h4>
-                        <h4>Host: <th:block th:text="${event.hostName}">David Mendoza</th:block></h4>
-                        <h4>Email: <th:block th:text="${event.hostEmail}">david@irsvped.com</th:block></h4>
-                        <h4>Phone: <th:block th:text="${event.hostPhone}">999 999 9999</th:block></h4>
-                        <h4>Code: <th:block th:text="${event.code}">TEST</th:block></h4>
-                        <h4>Street: <th:block th:text="${event.street}">TEST</th:block></h4>
-                        <h4>City: <th:block th:text="${event.city}">TEST</th:block></h4>
-                        <h4>State: <th:block th:text="${event.state}">TEST</th:block></h4>
-                        <h4>ZIP Code: <th:block th:text="${event.zip}">TEST</th:block></h4>
-                        <h4><th:block th:utext="${event.description}" th:unless="${#strings.isEmpty(event.description)}">Event description</th:block></h4>
+                    	<h2 class="confirmed-center"><span class="confirmed-title-1"> Save </span>
+	                    <span class="confirmed-title-2"> THE </span>
+	                    <span class="confirmed-title-1"> Date </span></h2>
+	                    <h4 class="confirmed-center"><span class="confirmed-date"> Date: <th:block th:text="${#dates.format(event.date, 'MM.dd.yy')}">Sun, May 1 2014 12:00 am CST</th:block></span></h4>
+                        <h1 class="confirmed-center"><span class="confirmed-event"> <th:block th:text="${event.name}">Event Name</th:block></span></h1><br/>
+                        <h2 class="confirmed-rsvp"> RSVP </h2>
+                    	<h4 class="confirmed-code"><th:block th:text="${event.code}">TEST</th:block></h4>
+                        <h6 class="confirmed-host">Host:&nbsp;<th:block th:text="${event.hostName}">David Mendoza</th:block> | 
+	                    email:&nbsp;<th:block th:text="${event.hostEmail}">david@irsvped.com</th:block> | 
+	                    Phone Number:&nbsp;<th:block th:text="${event.hostPhone}">999 999 9999</th:block></h6>
+	                    <h6 class="confirmed-description"> Street: <th:block th:text="${event.street}">TEST</th:block> City: <th:block th:text="${event.city}">TEST</th:block>
+	                    State: <th:block th:text="${event.state}">TEST</th:block>
+	                    ZIP Code: <th:block th:text="${event.zip}">TEST</th:block></h6>                        
+                        <h4 class="confirmed-description"><th:block th:utext="${event.description}" th:unless="${#strings.isEmpty(event.description)}">Event description</th:block></h4>
                         <p th:unless="${#strings.isEmpty(event.imageName)}"><img src="#" th:src="@{'/image/'+${event.id}}" th:alt="${event.imageName}" alt="imageName" class='img-responsive' style='width: 100%;'/></p>
 
                         <div class="row">
